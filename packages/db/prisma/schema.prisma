@@ -10,7 +10,11 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../node_modules/.prisma/client"
+  // NOTE: no custom `output` here — this generates into the default
+  // location inside @prisma/client's own node_modules folder, which is
+  // what the bare `import { PrismaClient } from "@prisma/client"` in
+  // src/client.ts expects to resolve. A custom output path here without
+  // also changing that import would break the build (see repo fix notes).
 }
 
 datasource db {

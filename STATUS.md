@@ -6,6 +6,13 @@ what has **not been validated** because this environment has no network
 access. Per the project's own directive (spec §36–37): nothing below
 claims a test ran that didn't, or a package installed that wasn't.
 
+> **Deployment note:** three build-breaking issues found during the first
+> Vercel deploy attempt (missing lockfile, missing pnpm install hardening,
+> a Prisma output-path mismatch) have been fixed in this codebase. See
+> `DEPLOYMENT.md` for exact Vercel settings and the one remaining local
+> step — generating `pnpm-lock.yaml` on a machine with network access —
+> that this environment cannot perform.
+
 ## What's Actually Implemented
 
 - **Monorepo scaffold**: pnpm workspace + Turborepo config, shared strict
