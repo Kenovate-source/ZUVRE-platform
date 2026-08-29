@@ -110,6 +110,7 @@ model Workspace {
   updatedAt   DateTime @updatedAt
 
   members         WorkspaceMember[]
+  roles           Role[]
   capabilityGrants CapabilityGrant[]
   executions      CapabilityExecution[]
   artifacts       Artifact[]
