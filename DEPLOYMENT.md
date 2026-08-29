@@ -53,12 +53,12 @@ Everything else in `.env.example` is optional for Phase 0 (unused
 provider keys, observability DSN, etc. — see the file's comments).
 
 `DATABASE_URL` must be set **before the first deploy** — `packages/db`'s
-`postinstall` step runs `prisma generate`, which reads the schema but does
-**not** need a live database connection to succeed; however Next.js's
-build will fail if `packages/db/src/client.ts` is evaluated at build time
-without `DATABASE_URL` defined in the environment (Prisma throws on
-`new PrismaClient()` construction without it), so set it regardless of
-whether you've provisioned/migrated the database yet.
+`build` script runs `prisma generate` (see §5, item 2), which reads the
+schema but does **not** need a live database connection to succeed;
+however Next.js's build will fail if `packages/db/src/client.ts` is
+evaluated at build time without `DATABASE_URL` defined in the environment
+(Prisma throws on `new PrismaClient()` construction without it), so set it
+regardless of whether you've provisioned/migrated the database yet.
 
 ## 4. Files That Must Be Committed to GitHub
 
@@ -79,10 +79,19 @@ Do **not** commit: `node_modules/`, `.next/`, `.turbo/`, `.env` (only
 1. **`.npmrc`** (new, root) — `auto-install-peers=true`,
    `strict-peer-dependencies=false`, to prevent pnpm's peer-dependency
    resolution from stalling the install on Vercel's CI.
-2. **`package.json`** (root, modified) — added
-   `"postinstall": "pnpm --filter @zuvre/db run generate"` so the Prisma
-   client is generated automatically right after every install, with no
-   manual step and no reliance on `next build` to trigger it.
+2. **`packages/db/package.json`** (modified) — added a `"build": "prisma
+   generate"` script, so Turborepo's own build graph
+   (`turbo.json`'s `build` task already declares `"dependsOn": ["^build"]`)
+   generates the Prisma client as part of building `@zuvre/db`, before
+   `@zuvre/web` builds. This replaced an earlier root-level `postinstall`
+   hook that ran `pnpm --filter @zuvre/db run generate` — that approach
+   failed on Vercel with `prisma: command not found`, because a root
+   `postinstall` lifecycle script fires mid-install, before
+   `packages/db`'s own `prisma` devDependency binary is reliably linked
+   into its `node_modules/.bin`. Turborepo's build graph runs strictly
+   after install completes, inside each package's own directory, which is
+   why it's the correct place for this step rather than an install-time
+   hook. The root `package.json` no longer has a `postinstall` script.
 3. **`packages/db/prisma/schema.prisma`** (modified) — removed a custom
    Prisma `generator client { output = ... }` path that didn't match the
    `import { PrismaClient } from "@prisma/client"` in
@@ -115,7 +124,7 @@ corepack prepare pnpm@9.0.0 --activate
 # 3. Real install — this is what generates pnpm-lock.yaml
 pnpm install
 
-# 4. Sanity-check Prisma client generation (also runs automatically via postinstall)
+# 4. Sanity-check Prisma client generation (also runs automatically as part of `pnpm build`, via Turborepo)
 pnpm --filter @zuvre/db generate
 
 # 5. Sanity-check the full monorepo actually builds
