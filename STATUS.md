@@ -32,7 +32,7 @@ claims a test ran that didn't, or a package installed that wasn't.
 - **Auth foundation**: RBAC permission matching, JWT session issuing/
   verification, scrypt password hashing, and an owner-action audit
   wrapper — `packages/auth`.
-- **Design system tokens**: two complete, named themes (Solmere/Duskmere)
+- **Design system tokens**: two complete, named themes (Obsidian/Verdigris)
   as both a TypeScript source of truth and CSS variables —
   `packages/ui/src/tokens.ts`, `apps/web/src/app/globals.css`.
 - **One real, end-to-end capability**: `ai.chat`

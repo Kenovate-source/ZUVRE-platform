@@ -11,7 +11,7 @@ zuvre/
     capability-sdk/      defineCapability(), registry, execution context types
     ai-gateway/          Provider-agnostic AI routing (text/image/audio/video)
     auth/                Sessions, RBAC/permissions, password hashing, owner audit wrapper
-    ui/                  Design tokens (Solmere / Duskmere), shared components (grows over time)
+    ui/                  Design tokens (Obsidian / Verdigris), shared components (grows over time)
   docs/                  This documentation set + ADRs
 ```
 

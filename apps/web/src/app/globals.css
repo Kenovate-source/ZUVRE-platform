@@ -2,28 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-:root[data-zuvre-theme="solmere"] {
-  --zuvre-background: #faf6ef;
-  --zuvre-surface: #ffffff;
-  --zuvre-surface-raised: #f3ece0;
-  --zuvre-border: #e4d9c7;
-  --zuvre-text-primary: #221d17;
-  --zuvre-text-secondary: #544a3d;
-  --zuvre-text-muted: #8a7f6e;
-  --zuvre-accent-primary: #b96a34;
-  --zuvre-accent-secondary: #3c4468;
+/* =========================================================================
+   ZUVRE THEME VARIABLES — "The Two Vaults"
+   Source of truth: packages/ui/src/tokens.ts. Keep these in sync manually;
+   apps/web can't import TS values into CSS custom properties directly
+   without a build step, so both files are hand-kept identical — see
+   docs/03-brand-book.md §5 for the note on this.
+   ========================================================================= */
+
+:root[data-zuvre-theme="obsidian"] {
+  --zuvre-background: #14121b;
+  --zuvre-surface: #1e1b27;
+  --zuvre-surface-raised: #28232f;
+  --zuvre-border: #362f3d;
+  --zuvre-border-interactive: #71627a;
+  --zuvre-text-primary: #ece6dd;
+  --zuvre-text-secondary: #b9afa0;
+  --zuvre-text-muted: #8a8079;
+  --zuvre-accent-primary: #c89b4a;
+  --zuvre-accent-primary-contrast: #1b1408;
+  --zuvre-accent-secondary: #b25a6b;
+  --zuvre-success: #4e9a72;
+  --zuvre-warning: #b98a3e;
+  --zuvre-danger: #c36b5c;
+  --zuvre-info: #6e8cb0;
+  --zuvre-shadow-card: 0 1px 2px rgba(8, 6, 12, 0.4), 0 8px 24px -8px rgba(8, 6, 12, 0.55);
+  --zuvre-shadow-modal: 0 24px 64px -16px rgba(6, 4, 10, 0.65);
+  --zuvre-glow-accent: 0 0 0 3px rgba(200, 155, 74, 0.18);
+  --zuvre-hairline-highlight: inset 0 1px 0 rgba(236, 230, 221, 0.06);
 }
 
-:root[data-zuvre-theme="duskmere"] {
-  --zuvre-background: #18141b;
-  --zuvre-surface: #221c27;
-  --zuvre-surface-raised: #2c2532;
-  --zuvre-border: #3b3340;
-  --zuvre-text-primary: #f3ece2;
-  --zuvre-text-secondary: #c9bfb2;
-  --zuvre-text-muted: #8d8390;
-  --zuvre-accent-primary: #e0a257;
-  --zuvre-accent-secondary: #9d9fd6;
+:root[data-zuvre-theme="verdigris"] {
+  --zuvre-background: #101b18;
+  --zuvre-surface: #182620;
+  --zuvre-surface-raised: #213229;
+  --zuvre-border: #2c4137;
+  --zuvre-border-interactive: #567364;
+  --zuvre-text-primary: #e7e9de;
+  --zuvre-text-secondary: #aeb6a6;
+  --zuvre-text-muted: #7c8478;
+  --zuvre-accent-primary: #c97c4d;
+  --zuvre-accent-primary-contrast: #1a0f08;
+  --zuvre-accent-secondary: #8c6aa0;
+  --zuvre-success: #5aa37e;
+  --zuvre-warning: #c08a42;
+  --zuvre-danger: #c87462;
+  --zuvre-info: #5e93a0;
+  --zuvre-shadow-card: 0 1px 2px rgba(4, 8, 6, 0.4), 0 8px 24px -8px rgba(4, 8, 6, 0.55);
+  --zuvre-shadow-modal: 0 24px 64px -16px rgba(3, 6, 5, 0.65);
+  --zuvre-glow-accent: 0 0 0 3px rgba(201, 124, 77, 0.18);
+  --zuvre-hairline-highlight: inset 0 1px 0 rgba(231, 233, 222, 0.06);
 }
 
 body {
@@ -34,4 +62,119 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* =========================================================================
+   ZUVRE COMPONENT VOCABULARY
+   These classes are the shared visual language every surface — including
+   future capabilities — should build on rather than inventing its own
+   card/button/badge treatment. See docs/03-brand-book.md §6.
+   ========================================================================= */
+
+.zuvre-eyebrow {
+  font-family: theme("fontFamily.mono");
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--zuvre-text-muted);
+}
+
+.zuvre-card {
+  background-color: var(--zuvre-surface);
+  border: 1px solid var(--zuvre-border);
+  border-radius: 13px;
+  box-shadow: var(--zuvre-shadow-card);
+  position: relative;
+}
+
+.zuvre-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--zuvre-hairline-highlight);
+  pointer-events: none;
+}
+
+.zuvre-panel-raised {
+  background-color: var(--zuvre-surface-raised);
+  border: 1px solid var(--zuvre-border);
+  border-radius: 13px;
+  box-shadow: var(--zuvre-shadow-modal);
+}
+
+.zuvre-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--zuvre-border);
+  color: var(--zuvre-text-secondary);
+  background-color: var(--zuvre-surface-raised);
+}
+
+.zuvre-badge-accent {
+  border-color: color-mix(in srgb, var(--zuvre-accent-primary) 40%, transparent);
+  color: var(--zuvre-accent-primary);
+  background-color: color-mix(in srgb, var(--zuvre-accent-primary) 12%, var(--zuvre-surface));
+}
+
+.zuvre-button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  background-color: var(--zuvre-accent-primary);
+  color: var(--zuvre-accent-primary-contrast);
+  transition: filter 220ms cubic-bezier(0.2, 0, 0, 1), transform 220ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.zuvre-button-primary:hover { filter: brightness(1.08); }
+.zuvre-button-primary:active { transform: translateY(1px); }
+
+.zuvre-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  background-color: transparent;
+  color: var(--zuvre-text-primary);
+  border: 1px solid var(--zuvre-border-interactive);
+  transition: background-color 220ms ease;
+}
+
+.zuvre-button-secondary:hover {
+  background-color: var(--zuvre-surface-raised);
+}
+
+.zuvre-input {
+  background-color: var(--zuvre-surface);
+  border: 1px solid var(--zuvre-border-interactive);
+  border-radius: 9px;
+  padding: 0.625rem 0.875rem;
+  color: var(--zuvre-text-primary);
+  transition: box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.zuvre-input:focus {
+  outline: none;
+  border-color: var(--zuvre-accent-primary);
+  box-shadow: var(--zuvre-glow-accent);
+}
+
+.zuvre-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--zuvre-glow-accent);
+  border-radius: 9px;
 }
