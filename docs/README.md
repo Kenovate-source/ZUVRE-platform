@@ -24,7 +24,7 @@ low-risk work, listed in `STATUS.md` as next-phase.
 | 15 | Testing Strategy | Outlined | See root `STATUS.md` "Tests" section for what's runnable offline vs not, and what test types are planned |
 | 16 | Observability Guide | Outlined | Captured in Architecture §8; log/metrics provider wiring is next-phase |
 | 17 | Internationalization Strategy | Outlined | `User.locale`/`User.timeZone` fields exist in schema; no i18n library wired into `apps/web` yet |
-| 18 | Monetization / Entitlement Specification | Outlined | Plan names/rationale in Brand Book §7; `Plan.entitlements` schema shape and seed data in `packages/db/prisma/seed.ts` |
+| 18 | Monetization / Entitlement Specification | Outlined | Plan names/rationale in Brand Book §10; `Plan.entitlements` schema shape and seed data in `packages/db/prisma/seed.ts` |
 | 19 | External Integrations Specification | Outlined | Captured conceptually in Architecture (capability `requiredPermissions`, grant `approvalPolicy`); no third-party integration implemented yet |
 | 20 | ADR Collection | **Started** | `adr/0001`–`adr/0003`; add one per significant future decision |
 

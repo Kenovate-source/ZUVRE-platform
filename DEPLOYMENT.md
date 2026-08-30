@@ -13,7 +13,7 @@ zuvre/
   packages/capability-sdk/   Capability contract + registry
   packages/ai-gateway/  Provider-agnostic AI routing (Anthropic adapter included)
   packages/auth/        Sessions, RBAC, password hashing, owner-audit wrapper
-  packages/ui/          Design tokens (Obsidian / Verdigris themes)
+  packages/ui/          Design tokens (Nocturne / Aubade themes)
   docs/                 Product/architecture/brand documentation + ADRs
 ```
 

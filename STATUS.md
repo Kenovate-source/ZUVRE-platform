@@ -32,9 +32,26 @@ claims a test ran that didn't, or a package installed that wasn't.
 - **Auth foundation**: RBAC permission matching, JWT session issuing/
   verification, scrypt password hashing, and an owner-action audit
   wrapper — `packages/auth`.
-- **Design system tokens**: two complete, named themes (Obsidian/Verdigris)
-  as both a TypeScript source of truth and CSS variables —
-  `packages/ui/src/tokens.ts`, `apps/web/src/app/globals.css`.
+- **Design system tokens**: two complete, named themes (Nocturne/Aubade —
+  both dark-native, no light/cream mode) as both a TypeScript source of
+  truth and CSS variables — `packages/ui/src/tokens.ts`,
+  `apps/web/src/app/globals.css`. Every text/background pairing is
+  checked against real WCAG contrast math, not eyeballed — see
+  `docs/03-brand-book.md` §4.
+- **Brand identity system**: a real (not placeholder-box) SVG logo mark
+  (`apps/web/src/components/zuvre-mark.tsx`), wordmark lockup
+  (`zuvre-wordmark.tsx`), and a mood-aware mascot/companion component
+  (`zuvre-companion.tsx`) sharing the mark's "spark" motif — all
+  functioning, theme-aware, and reusable. These are v0.1 foundation
+  assets: real, rendered geometry that a professional visual-design pass
+  should still refine — see `docs/03-brand-book.md` §12–13. Nothing
+  about them is faked or a static image placeholder.
+- **Landing experience**: a real, working landing page
+  (`apps/web/src/app/page.tsx`) built from atmospheric sections (hero
+  with the companion, a radial "ecosystem constellation" visual replacing
+  a card grid, a flowing capability list) rather than a generic
+  logo→headline→card-grid SaaS layout. Every capability not yet live is
+  labeled "Arriving," never presented as functional.
 - **One real, end-to-end capability**: `ai.chat`
   (`apps/web/src/server/capabilities/ai-chat.ts`), registered via
   `bootstrapCapabilities()`, executable through a real API route
@@ -63,6 +80,15 @@ claims a test ran that didn't, or a package installed that wasn't.
   no Stripe/etc. integration).
 - 15 of the 20 requested documents are outlined-and-linked rather than
   standalone (see `docs/README.md` for exactly which, and why).
+- **A professional visual-design pass on the logo mark and mascot.**
+  Both are real, working, theme-aware components — not fabricated or
+  faked — but their exact silhouette/geometry is a v0.1 foundation
+  built by an engineer, not an illustrator. The mascot's `mood` prop
+  currently supports only `"idle"`; the architecture is ready for more
+  states, none are built yet. Nothing in the landing page or brand
+  system depends on this changing — a designer can replace the SVG
+  contents of `zuvre-mark.tsx` / `zuvre-companion.tsx` without touching
+  anything that renders them.
 
 ## Tests
 

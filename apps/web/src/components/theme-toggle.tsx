@@ -2,21 +2,21 @@
 
 import { useEffect, useState } from "react";
 
-type ZuvreThemeName = "obsidian" | "verdigris";
+type ZuvreThemeName = "nocturne" | "aubade";
 
 const THEMES: { name: ZuvreThemeName; label: string; tagline: string }[] = [
-  { name: "obsidian", label: "Obsidian", tagline: "Ink, brass, and candlelight." },
-  { name: "verdigris", label: "Verdigris", tagline: "Patina, glass, and moss." },
+  { name: "nocturne", label: "Nocturne", tagline: "Ink, brass, and candlelight." },
+  { name: "aubade", label: "Aubade", tagline: "The dark hour before the ecosystem wakes." },
 ];
 
 const STORAGE_KEY = "zuvre-theme";
 
 export function ThemeToggle() {
-  const [active, setActive] = useState<ZuvreThemeName>("obsidian");
+  const [active, setActive] = useState<ZuvreThemeName>("nocturne");
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY) as ZuvreThemeName | null;
-    if (stored === "obsidian" || stored === "verdigris") {
+    if (stored === "nocturne" || stored === "aubade") {
       setActive(stored);
       document.documentElement.setAttribute("data-zuvre-theme", stored);
     }

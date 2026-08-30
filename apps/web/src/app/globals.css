@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 /* =========================================================================
-   ZUVRE THEME VARIABLES — "The Two Vaults"
+   ZUVRE THEME VARIABLES — "Nocturne & Aubade"
    Source of truth: packages/ui/src/tokens.ts. Keep these in sync manually;
    apps/web can't import TS values into CSS custom properties directly
    without a build step, so both files are hand-kept identical — see
    docs/03-brand-book.md §5 for the note on this.
    ========================================================================= */
 
-:root[data-zuvre-theme="obsidian"] {
+:root[data-zuvre-theme="nocturne"] {
   --zuvre-background: #14121b;
   --zuvre-surface: #1e1b27;
   --zuvre-surface-raised: #28232f;
@@ -30,28 +30,32 @@
   --zuvre-shadow-modal: 0 24px 64px -16px rgba(6, 4, 10, 0.65);
   --zuvre-glow-accent: 0 0 0 3px rgba(200, 155, 74, 0.18);
   --zuvre-hairline-highlight: inset 0 1px 0 rgba(236, 230, 221, 0.06);
+  --zuvre-bloom-1: rgba(200, 155, 74, 0.10);
+  --zuvre-bloom-2: rgba(178, 90, 107, 0.08);
 }
 
-:root[data-zuvre-theme="verdigris"] {
-  --zuvre-background: #101b18;
-  --zuvre-surface: #182620;
-  --zuvre-surface-raised: #213229;
-  --zuvre-border: #2c4137;
-  --zuvre-border-interactive: #567364;
-  --zuvre-text-primary: #e7e9de;
-  --zuvre-text-secondary: #aeb6a6;
-  --zuvre-text-muted: #7c8478;
-  --zuvre-accent-primary: #c97c4d;
-  --zuvre-accent-primary-contrast: #1a0f08;
+:root[data-zuvre-theme="aubade"] {
+  --zuvre-background: #1b1416;
+  --zuvre-surface: #241c1f;
+  --zuvre-surface-raised: #2f2429;
+  --zuvre-border: #3d2f34;
+  --zuvre-border-interactive: #8c6e70;
+  --zuvre-text-primary: #ede3de;
+  --zuvre-text-secondary: #c2afa8;
+  --zuvre-text-muted: #8f7c77;
+  --zuvre-accent-primary: #cb8259;
+  --zuvre-accent-primary-contrast: #1d1109;
   --zuvre-accent-secondary: #8c6aa0;
-  --zuvre-success: #5aa37e;
-  --zuvre-warning: #c08a42;
-  --zuvre-danger: #c87462;
-  --zuvre-info: #5e93a0;
-  --zuvre-shadow-card: 0 1px 2px rgba(4, 8, 6, 0.4), 0 8px 24px -8px rgba(4, 8, 6, 0.55);
-  --zuvre-shadow-modal: 0 24px 64px -16px rgba(3, 6, 5, 0.65);
-  --zuvre-glow-accent: 0 0 0 3px rgba(201, 124, 77, 0.18);
-  --zuvre-hairline-highlight: inset 0 1px 0 rgba(231, 233, 222, 0.06);
+  --zuvre-success: #6fa37e;
+  --zuvre-warning: #c99552;
+  --zuvre-danger: #c97462;
+  --zuvre-info: #7b93a8;
+  --zuvre-shadow-card: 0 1px 2px rgba(10, 6, 7, 0.4), 0 8px 24px -8px rgba(10, 6, 7, 0.55);
+  --zuvre-shadow-modal: 0 24px 64px -16px rgba(8, 5, 6, 0.65);
+  --zuvre-glow-accent: 0 0 0 3px rgba(203, 130, 89, 0.18);
+  --zuvre-hairline-highlight: inset 0 1px 0 rgba(237, 227, 222, 0.06);
+  --zuvre-bloom-1: rgba(203, 130, 89, 0.10);
+  --zuvre-bloom-2: rgba(140, 106, 160, 0.08);
 }
 
 body {
@@ -66,9 +70,9 @@ body {
 
 /* =========================================================================
    ZUVRE COMPONENT VOCABULARY
-   These classes are the shared visual language every surface — including
-   future capabilities — should build on rather than inventing its own
-   card/button/badge treatment. See docs/03-brand-book.md §6.
+   Shared visual language every surface — including future capabilities —
+   should build on rather than inventing its own card/button/badge
+   treatment. See docs/03-brand-book.md §6.
    ========================================================================= */
 
 .zuvre-eyebrow {
@@ -177,4 +181,79 @@ body {
   outline: none;
   box-shadow: var(--zuvre-glow-accent);
   border-radius: 9px;
+}
+
+/* =========================================================================
+   ATMOSPHERE — hero blooms, constellation lines, mascot motion
+   Pure CSS, no new dependencies. Every animation respects reduced-motion
+   via the global rule above.
+   ========================================================================= */
+
+.zuvre-atmosphere {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.zuvre-bloom {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(60px);
+}
+
+.zuvre-bloom-a {
+  width: 480px;
+  height: 480px;
+  top: -160px;
+  left: -120px;
+  background: radial-gradient(circle, var(--zuvre-bloom-1), transparent 70%);
+}
+
+.zuvre-bloom-b {
+  width: 420px;
+  height: 420px;
+  top: 40px;
+  right: -140px;
+  background: radial-gradient(circle, var(--zuvre-bloom-2), transparent 70%);
+}
+
+@keyframes zuvre-breathe {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-6px) scale(1.015); }
+}
+
+.zuvre-mascot-breathe {
+  animation: zuvre-breathe 5200ms ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-mascot-breathe { animation: none; }
+}
+
+@keyframes zuvre-flicker {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.85; }
+  55% { opacity: 0.95; }
+}
+
+.zuvre-mascot-core {
+  animation: zuvre-flicker 3400ms ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-mascot-core { animation: none; }
+}
+
+.zuvre-constellation-line {
+  stroke: var(--zuvre-border-interactive);
+  stroke-width: 1;
+  opacity: 0.5;
+}
+
+.zuvre-constellation-node {
+  fill: var(--zuvre-surface-raised);
+  stroke: var(--zuvre-border-interactive);
+  stroke-width: 1;
 }

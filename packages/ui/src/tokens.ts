@@ -1,24 +1,27 @@
 /**
- * ZUVRE Design Tokens — "The Two Vaults"
+ * ZUVRE Design Tokens — "Nocturne & Aubade"
  * Full rationale in docs/03-brand-book.md — this file is the executable
  * source of truth; the Brand Book should never drift from it.
  *
- * ZUVRE has no "light mode." Both worlds are deep, richly hued, and built
- * for long sessions — the difference between them is mood and material,
- * not brightness:
+ * ZUVRE has no "light mode." Both worlds are deep and dark — the
+ * difference between them is atmosphere and light, not brightness:
  *
- *   Obsidian  — volcanic-glass indigo-black + antique gold + garnet.
- *               The ecosystem at night: ink, brass instruments, candlelight.
- *   Verdigris — oxidised-copper deep teal-green + warm copper + amethyst.
- *               The ecosystem in a greenhouse at dusk: patina, glass, moss.
+ *   Nocturne — indigo-black night, antique gold, garnet.
+ *              The ecosystem at rest: ink, brass instruments, candlelight.
+ *   Aubade   — plum-brown dark, warm copper-rose, fading violet.
+ *              The ecosystem waking: the hour before sunrise, still dark,
+ *              already warming at the edges.
+ *
+ * "Aubade" is a dawn song — a piece written for the moment night gives
+ * way to morning while it's still dark outside. Both names are ZUVRE's
+ * own vocabulary, not generic material/color labels, and neither implies
+ * a light or cream background — see docs/03-brand-book.md §1–2.
  *
  * Every color below was checked against WCAG AA contrast requirements
- * (see docs/03-brand-book.md §4 for the actual computed ratios) — this
- * isn't a recolor of a light template, it's a from-scratch dark-native
- * palette pair designed to be comfortable for hours of use.
+ * (see docs/03-brand-book.md §4 for the actual computed ratios).
  */
 
-export type ZuvreThemeName = "obsidian" | "verdigris";
+export type ZuvreThemeName = "nocturne" | "aubade";
 
 export interface ZuvreTheme {
   name: ZuvreThemeName;
@@ -46,9 +49,9 @@ export interface ZuvreTheme {
   };
 }
 
-export const obsidian: ZuvreTheme = {
-  name: "obsidian",
-  label: "Obsidian",
+export const nocturne: ZuvreTheme = {
+  name: "nocturne",
+  label: "Nocturne",
   tagline: "Ink, brass, and candlelight.",
   colors: {
     background: "#14121B",
@@ -69,30 +72,30 @@ export const obsidian: ZuvreTheme = {
   },
 };
 
-export const verdigris: ZuvreTheme = {
-  name: "verdigris",
-  label: "Verdigris",
-  tagline: "Patina, glass, and moss.",
+export const aubade: ZuvreTheme = {
+  name: "aubade",
+  label: "Aubade",
+  tagline: "The dark hour before the ecosystem wakes.",
   colors: {
-    background: "#101B18",
-    surface: "#182620",
-    surfaceRaised: "#213229",
-    border: "#2C4137",
-    borderInteractive: "#567364",
-    textPrimary: "#E7E9DE",
-    textSecondary: "#AEB6A6",
-    textMuted: "#7C8478",
-    accentPrimary: "#C97C4D", // warm copper
-    accentPrimaryContrast: "#1A0F08",
-    accentSecondary: "#8C6AA0", // amethyst
-    success: "#5AA37E",
-    warning: "#C08A42",
-    danger: "#C87462",
-    info: "#5E93A0",
+    background: "#1B1416",
+    surface: "#241C1F",
+    surfaceRaised: "#2F2429",
+    border: "#3D2F34",
+    borderInteractive: "#8C6E70",
+    textPrimary: "#EDE3DE",
+    textSecondary: "#C2AFA8",
+    textMuted: "#8F7C77",
+    accentPrimary: "#CB8259", // warm copper-rose, dawn light
+    accentPrimaryContrast: "#1D1109",
+    accentSecondary: "#8C6AA0", // fading-night violet
+    success: "#6FA37E",
+    warning: "#C99552",
+    danger: "#C97462",
+    info: "#7B93A8",
   },
 };
 
-export const zuvreThemes: Record<ZuvreThemeName, ZuvreTheme> = { obsidian, verdigris };
+export const zuvreThemes: Record<ZuvreThemeName, ZuvreTheme> = { nocturne, aubade };
 
 /**
  * Typographic signature: a warm editorial serif for display moments, a
@@ -145,16 +148,16 @@ export const motion = {
  * gradient is sanctioned — never as a full-bleed background wash.
  */
 export const elevation = {
-  obsidian: {
+  nocturne: {
     shadowCard: "0 1px 2px rgba(8, 6, 12, 0.4), 0 8px 24px -8px rgba(8, 6, 12, 0.55)",
     shadowModal: "0 24px 64px -16px rgba(6, 4, 10, 0.65)",
     glowAccent: "0 0 0 3px rgba(200, 155, 74, 0.18)",
     hairlineHighlight: "inset 0 1px 0 rgba(236, 230, 221, 0.06)",
   },
-  verdigris: {
-    shadowCard: "0 1px 2px rgba(4, 8, 6, 0.4), 0 8px 24px -8px rgba(4, 8, 6, 0.55)",
-    shadowModal: "0 24px 64px -16px rgba(3, 6, 5, 0.65)",
-    glowAccent: "0 0 0 3px rgba(201, 124, 77, 0.18)",
-    hairlineHighlight: "inset 0 1px 0 rgba(231, 233, 222, 0.06)",
+  aubade: {
+    shadowCard: "0 1px 2px rgba(10, 6, 7, 0.4), 0 8px 24px -8px rgba(10, 6, 7, 0.55)",
+    shadowModal: "0 24px 64px -16px rgba(8, 5, 6, 0.65)",
+    glowAccent: "0 0 0 3px rgba(203, 130, 89, 0.18)",
+    hairlineHighlight: "inset 0 1px 0 rgba(237, 227, 222, 0.06)",
   },
 };
