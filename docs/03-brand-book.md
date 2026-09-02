@@ -1,276 +1,146 @@
-# ZUVRE Brand Book
+# ZUVRE Brand Book (Repository Reference)
 
-**Name pronunciation:** Zoo-vray — kept out of the visible interface (see
-§12); available to anyone who looks for it via `title`/`aria-label`.
-**Personality:** warm, intelligent, sophisticated, welcoming, mysterious,
-calm, futuristic, human, imaginative, premium, alive, slightly magical.
+**Governing authority:** the ZUVRE Brand Handoff Package and the Final
+Canonical Asset & Brand Authority Map (external documents, brand-owner
+maintained) are authoritative. This file is a repository-context summary
+kept in sync with them — if the two ever disagree, the external documents
+win. This file previously documented an earlier, self-authored
+placeholder identity (different hex values, Fraunces typeface, a
+different logo/mascot) built before the canonical package existed; that
+version is fully superseded as of this revision.
 
-## 1. The Core Idea: Nocturne & Aubade
+## 1. Brand
 
-ZUVRE has no "light mode." Both of its visual worlds are dark, richly
-hued, and built for long sessions — the difference between them is
-**atmosphere and light**, not brightness. Neither uses white, cream,
-off-white, or beige as a background or surface color anywhere.
+**ZUVRE.** Tagline: **"Give Thought a World."** Transformation
+philosophy: Thought → Movement → Form → Creation → World.
 
-- **Nocturne** — indigo-black, antique gold, garnet. The ecosystem at
-  rest: ink, brass instruments, candlelight.
-- **Aubade** — plum-brown dark, warm copper-rose, fading violet. The
-  ecosystem waking: the hour before sunrise — still dark, already
-  warming at the edges.
+Personality: Intelligent, Curious, Warm, Sophisticated, Creative,
+Purposeful, Expansive — plus Premium, Spacious, Alive, slightly
+otherworldly, human-centered.
 
-An *aubade* is a piece of music or poetry written for that specific
-in-between hour — night giving way to morning while it's still dark
-outside. Both names are ZUVRE's own vocabulary, not generic
-material/color labels (the project's first two naming attempts —
-Solmere/Duskmere, then Obsidian/Verdigris — were rejected for exactly
-that reason: too close to ordinary theme-naming conventions, or too
-literally tied to materials rather than to ZUVRE's own identity). Neither
-name implies a light or cream background.
+## 2. Visual Worlds
 
-Think of Nocturne and Aubade as two hours in the same day, not two
-products. Someone should recognize either one as ZUVRE within five
-seconds: the deep, saturated-but-never-neon backgrounds, the warm
-metallic accent, the wide-tracked mono "eyebrow" labels, the serif
-display type, and the mark's open-ring-and-spark motif are the signature,
-independent of which hour it is.
+- **Nocturne** — primary world. Signature accent: ZUVRE Gold.
+- **Aubade** — alternate world. **Not a light mode.** A dark, organic
+  moss/patina world. Signature accents: Patina and Moss.
 
-## 2. Why This Direction
+## 3. Color Tokens
 
-Default "AI product" visual language (neon purple/violet on pure black,
-glowing orbs, sci-fi sans type) has become generic to the point of being
-invisible, and reads cold rather than warm and human. A generic
-cyberpunk treatment was equally ruled out — it trades "mysterious" for
-"loud," which isn't the brand. Deep jewel tones with warm metallic
-accents borrow from museum vitrines, bound ledgers, and old brass
-instruments — premium reference points that are warm rather than
-sterile, alive rather than synthetic, and hard to confuse with a generic
-SaaS dashboard or a typical AI startup.
+Tier 1 (canonical, locked):
 
-## 3. The Palette
-
-### Nocturne
-
-| Token | Value | Use |
-|---|---|---|
-| background | `#14121B` | app background |
-| surface | `#1E1B27` | cards, panels |
-| surfaceRaised | `#28232F` | modals, popovers |
-| border | `#362F3D` | decorative hairlines, card edges |
-| borderInteractive | `#71627A` | input/select outlines |
-| textPrimary | `#ECE6DD` | body text |
-| textSecondary | `#B9AFA0` | secondary text |
-| accentPrimary | `#C89B4A` | antique gold — primary actions, focus |
-| accentSecondary | `#B25A6B` | garnet — secondary emphasis |
-
-### Aubade
-
-| Token | Value | Use |
-|---|---|---|
-| background | `#1B1416` | app background |
-| surface | `#241C1F` | cards, panels |
-| surfaceRaised | `#2F2429` | modals, popovers |
-| border | `#3D2F34` | decorative hairlines, card edges |
-| borderInteractive | `#8C6E70` | input/select outlines |
-| textPrimary | `#EDE3DE` | body text |
-| textSecondary | `#C2AFA8` | secondary text |
-| accentPrimary | `#CB8259` | warm copper-rose — primary actions, focus |
-| accentSecondary | `#8C6AA0` | fading-night violet — secondary emphasis |
-
-Full token set including semantic colors (success/warning/danger/info),
-shadows, and glow values: `packages/ui/src/tokens.ts` — that file is the
-executable source of truth; this table summarizes it, not the reverse.
-
-## 4. Accessibility — Actually Verified, Not Assumed
-
-Every text/background pairing below was computed against the real WCAG
-2.1 relative-luminance formula, because "highly readable and accessible"
-is a requirement, not a hope:
-
-| Pairing | Nocturne | Aubade | WCAG AA target |
-|---|---|---|---|
-| textPrimary on background | 14.95:1 | 14.37:1 | ≥4.5:1 (normal text) |
-| textPrimary on surface | 13.64:1 | 13.20:1 | ≥4.5:1 |
-| textSecondary on background | 8.57:1 | 8.63:1 | ≥4.5:1 |
-| accentPrimary on background | 7.28:1 | 5.94:1 | ≥3:1 (large text/icons) |
-| accentPrimaryContrast on accentPrimary (button text) | 7.17:1 | 6.05:1 | ≥4.5:1 |
-| danger on background | 4.93:1 | 5.32:1 | ≥4.5:1 |
-| borderInteractive on background | 3.29:1 | 3.95:1 | ≥3:1 (WCAG 1.4.11 non-text) |
-
-All pairings clear their target with margin. `textMuted` (used only for
-timestamps and decorative metadata, never as the sole carrier of meaning)
-sits just under the normal-text threshold by design — the quietest tone
-in the system, never used for anything that must be independently
-readable on its own.
-
-When Aubade's palette was rehued away from an earlier teal-green draft
-(kept from the rejected "Verdigris" naming, which didn't thematically fit
-a piece written for dawn) toward the current plum-brown/copper-rose, the
-new values were recomputed from scratch rather than assumed to still
-pass — they do, with the numbers above.
-
-## 5. Typography
-
-- **Display:** Fraunces — a warm, slightly editorial serif for headlines
-  and considered moments.
-- **Body:** Inter — proven legibility at UI sizes, gets out of the way.
-- **Mono:** IBM Plex Mono, set at wide letter-spacing (`0.16em`) for
-  uppercase "eyebrow" labels (section headers, the wordmark's tagline).
-  This wide-tracked mono-label pairing — an editorial serif headline
-  above a ledger-style mono label — is the single most recognizable
-  typographic signature in the system; see `.zuvre-eyebrow` in
-  `apps/web/src/app/globals.css`.
-
-## 6. Component Vocabulary — The Extensibility Contract
-
-Every future capability (image generation, the game builder, the Owner
-Control Center, third-party surfaces) should be built from this same,
-already-implemented set of primitives rather than inventing new visual
-treatments. They're real CSS classes in
-`apps/web/src/app/globals.css`, demonstrated in `apps/web/src/app/page.tsx`:
-
-| Class | Use |
+| Token | Hex |
 |---|---|
-| `.zuvre-card` | Default content container — surface color, hairline border, soft hue-tinted shadow, subtle inner top highlight |
-| `.zuvre-panel-raised` | Modals, popovers, elevated panels |
-| `.zuvre-badge` / `.zuvre-badge-accent` | Status tags, labels, notification pills |
-| `.zuvre-button-primary` / `.zuvre-button-secondary` | The two button treatments; nothing else should be invented for a third |
-| `.zuvre-input` | Form inputs — uses `borderInteractive`, focuses to a soft accent glow, never a hard outline |
-| `.zuvre-eyebrow` | Wide-tracked uppercase mono label |
-| `.zuvre-focus-ring` | Keyboard-focus treatment — a soft glow, not a harsh browser-default outline |
-| `.zuvre-atmosphere` / `.zuvre-bloom` | Soft, low-opacity radial glows for hero/atmospheric moments — see §14 |
-| `.zuvre-mascot-breathe` / `.zuvre-mascot-core` | The companion's idle motion — see §13 |
-| `.zuvre-constellation-line` / `.zuvre-constellation-node` | The radial ecosystem map — see §14 |
+| Nocturne 950 (background) | `#0E0C14` |
+| Nocturne 900 (surface) | `#121019` |
+| Nocturne 850 (surfaceRaised) | `#181520` |
+| Nocturne 800 (border) | `#211D29` |
+| ZUVRE Gold | `#D6A64A` |
+| Ivory Text | `#F2EEE5` |
+| Patina | `#5E8178` |
+| Glass | `#8DAFA4` |
+| Moss | `#687552` |
 
-A capability package that needs a visual treatment not covered here
-should extend this vocabulary (propose a new class in this same file) —
-not invent a one-off style scoped to itself.
+**Interpretive note (flagged, not silently assumed):** the governing docs
+specify one neutral ramp (Nocturne 950–800) and no separate Aubade ramp.
+This repository treats that ramp as shared between both worlds, with
+Patina/Moss/Glass differentiating Aubade and Gold/Glass differentiating
+Nocturne. See `packages/ui/src/tokens.ts` header and
+`ZUVRE_Implementation_Readiness_and_Brand_Integration_Plan.md` for the
+full reasoning — this is open to correction.
 
-## 7. Elevation, Borders, and the "Vitrine" Detail
+`textSecondary`, `textMuted`, `borderInteractive`, and the semantic
+colors (success/warning/danger/info) are **not** canonical brand values —
+the Brand Book defines identity, not a full UI token system. They're
+derived mathematically from the Tier 1 palette (WCAG-checked; see
+`packages/ui/src/tokens.ts` for the exact derivation and ratios).
 
-Shadows are always hue-tinted toward the active theme's background (never
-flat black) and kept low-opacity — see `elevation` in
-`packages/ui/src/tokens.ts`. Cards additionally carry a 1px inset
-highlight along their top edge, simulating soft ambient light catching
-the top of a glass case.
+Tier 2 atmospheric colors (broader emeralds/teals/blues/purples visible
+in the approved atmospheric reference sheets) are permitted only for
+backgrounds, environments, lighting, decorative elements, motion, and
+spatial depth — never for core UI/buttons/text.
 
-Two border tokens exist deliberately: `border` (quiet, ~1.4–1.6:1
-contrast, for decorative dividers and card edges) and `borderInteractive`
-(≥3:1, for anything the user is meant to click into — inputs, selects).
+## 4. Typography
 
-## 8. Motion
+- **Cormorant Garamond** — editorial/display.
+- **Inter** — UI, product, body.
+- **IBM Plex Mono** — technical/system/metadata.
 
-Short, purposeful transitions only (120/220/420ms — see `motion` in
-`packages/ui/src/tokens.ts`), respecting `prefers-reduced-motion`
-unconditionally. Hover and reveal moments use `easingReveal`
-(`cubic-bezier(0.2, 0, 0, 1)`) — a slow-start, fast-settle curve meant to
-feel like a considered mechanism rather than a bouncy pop. The companion's
-idle breathing and core flicker (§13) are the only continuous/ambient
-animations in the system, are both slow (3.4–5.2s cycles) and low-
-amplitude, and both disable entirely under `prefers-reduced-motion`.
+Loaded via `next/font/google` in `apps/web/src/app/layout.tsx` (real
+font loading — previously these were declared as CSS strings with
+nothing actually loading them). "ZUVRE Sans" is not canonical and is not
+implemented — it appeared only in a composite presentation artifact.
 
-## 9. Iconography
+## 5. Logo
 
-Rounded-corner, single-weight line icons — no gradient fills, no
-skeuomorphism, no filled/solid icon sets.
+Canonical authority: the six dedicated files under `LOGO SYSTEM/` in the
+approved visual assets (Primary Logo, Logo Mark/Symbol, Wordmark, Logo
+Lockups, Monochrome Variants, Small-Size/Favicon Marks). `zuvre-mark.tsx`
+is a **deliberately simplified production reconstruction** of the
+monochrome variant specifically (the one source classified as faithfully
+vector-viable) — a ring, a bold Z glyph, and an accent dot. It omits a
+secondary interweaving curved-stroke detail present in the canonical
+monochrome mark, because that detail couldn't be verified precisely
+enough to reconstruct faithfully without a rendering tool to check the
+result. The full ornate gold/glass chrome version is not attempted — see
+`ZUVRE_Production_Conversion_Plan_and_Asset_Manifest.md` for why (it
+requires a genuine redesign-to-spec pass, not a mechanical conversion).
 
-## 10. Plan Naming
+Pronunciation ("Zoo-vray") stays out of visible UI — available via
+`title`/`aria-label` only, per `zuvre-wordmark.tsx`.
 
-Unchanged and still consistent with this identity: **Spark** (free),
-**Ember** (personal), **Atlas** (teams), **Orbit** (organizations) — see
-`18-monetization-entitlements.md` (outlined, see `docs/README.md`).
-None of these collide with Nocturne/Aubade or with each other.
+## 6. Zuri
 
-## 11. What Changed From Earlier Directions
+ZUVRE's canonical companion character. No production-ready transparent
+asset exists yet. `zuri-companion.tsx` establishes the integration
+contract (size/expression/pose props matching the canonical 12
+expressions and 16 poses) but deliberately renders an unmistakable
+"asset pending" state rather than a fabricated stand-in — see that
+file's header comment for the full reasoning. Do not redesign Zuri or
+substitute another mascot.
 
-For traceability: Phase 0 shipped a cream/white daylight placeholder
-(Solmere) paired with a charcoal-plum evening theme (Duskmere), then a
-material-named pair (Obsidian/Verdigris) that fixed the white-background
-problem but still read as generic color/theme naming rather than ZUVRE's
-own vocabulary. This document and `packages/ui/src/tokens.ts` /
-`apps/web/src/app/globals.css` are the final replacement: **Nocturne**
-and **Aubade**. No file in the repository should reference "Solmere,"
-"Duskmere," "Obsidian," or "Verdigris" after this change except this
-section's own historical note.
+## 7. Icon System
 
-## 12. The Mark
+Three canonical families: Core (`Core ZUVRE Icon Set.png`), Capability
+(`Capability Icons 1/2.png`), Navigation/UI (`Navigation UI Icon Set
+2.png` only — Set 1 is archived, non-governing). Implemented as
+individual React SVG components under
+`apps/web/src/components/icons/{core,capability,navigation-ui}/`, a
+curated subset per family (not the full library — implementation-driven,
+not bulk conversion; see `ZUVRE_Implementation_Readiness_and_Brand_Integration_Plan.md`).
 
-The ZUVRE mark (`apps/web/src/components/zuvre-mark.tsx`) is an open ring
-with a spark riding its one open edge, plus a smaller inner arc
-suggesting depth — orbits within orbits, the way capabilities will
-eventually nest and multiply. The ring is never closed, because ZUVRE
-isn't: there's always room for one more capability, one more agent, one
-more thing orbiting the center.
+**AI Agent has no icon.** Both the original robot-head glyph and a
+proposed "Orbit & Execute" replacement were rejected. The capability
+icon index deliberately does not export an "AI Agent" icon — see that
+file's header comment. Do not add one without explicit brand-owner
+approval.
 
-The wordmark lockup (`zuvre-wordmark.tsx`) pairs the mark with "ZUVRE" set
-in Fraunces. The pronunciation ("Zoo-vray") is deliberately **not**
-rendered as visible text anywhere in the interface — it's available via
-`title="ZUVRE — pronounced Zoo-vray"` for anyone curious or using
-assistive technology, but it's not a permanent fixture of the UI the way
-it was in the Phase 0 foundation shell's "ZUVRE — ZOO-VRAY" header.
+## 8. Component Vocabulary
 
-**Honesty note:** this is a real, rendered, working mark — not a
-placeholder box — but it's a v0.1 foundation built by an engineer with
-precise SVG geometry, not a professional identity designer's illustration
-pass. It's built to be structurally reusable (single component, theme-
-driven via CSS variables, no hardcoded colors) specifically so a real
-designer can refine or replace its exact curves later without anything
-that renders `<ZuvreMark />` needing to change. See `STATUS.md`.
+Unchanged mechanism from the prior foundation — `.zuvre-card`,
+`.zuvre-panel-raised`, `.zuvre-badge`/`.zuvre-badge-accent`,
+`.zuvre-button-primary`/`.zuvre-button-secondary`, `.zuvre-input`,
+`.zuvre-eyebrow`, `.zuvre-focus-ring` in `apps/web/src/app/globals.css`,
+now carrying canonical color values. One addition:
+`.zuvre-pending-slot` — a visually unmistakable dashed-border state for
+any canonical element (like Zuri) that doesn't have a production asset
+yet, so a placeholder can never be mistaken for finished content.
 
-## 13. The Companion
+## 9. Motion
 
-`apps/web/src/components/zuvre-companion.tsx` is not a mascot in the
-theme-park sense — a small, quiet presence meant to eventually appear
-anywhere in ZUVRE a guide is useful (onboarding, an empty state, ZUVRE
-AI's own conversational surface), not permanently fixed to one hero
-section. Its glowing core uses the exact same "spark" motif as the mark's
-open-ring spark, so the two read as one family: the mark is the
-ecosystem's symbol, the companion is something that lives inside it.
+See `docs/10-motion-system.md` for all 8 canonical sequences (purpose,
+trigger, duration, easing, states, reduced-motion behavior,
+implementation format). Only "UI/Interface Transitions" is actually
+implemented today; the rest are specifications, built only when a real
+surface needs them.
 
-**Extensibility contract:** the component takes a `mood` prop
-(`ZuvreCompanionMood`). Only `"idle"` is implemented today — a soft
-breathing motion (`.zuvre-mascot-breathe`) and a slow core flicker
-(`.zuvre-mascot-core`), both disabled under `prefers-reduced-motion`. Any
-future surface that wants the companion to react (greeting, thinking,
-celebrating) should add a case to this prop's type and this component's
-render logic — never fork a second mascot component or hardcode a
-one-off version elsewhere.
+## 10. Atmospheric System
 
-**Honesty note, same as §12:** this is real and working, not a
-placeholder, but its exact silhouette is a v0.1 engineering pass, not
-final illustrated artwork. A name for the companion hasn't been
-established in any prior discussion — none is invented here.
+`.zuvre-atmosphere`/`.zuvre-bloom` in `globals.css` — re-hued to
+canonical Gold/Glass (Nocturne) and Patina/Moss (Aubade), mechanism
+unchanged from the prior foundation.
 
-## 14. The Landing Experience
+## 11. Plan Naming
 
-The Phase 0 landing page (`apps/web/src/app/page.tsx`) is built to feel
-like entering a place, not reading a product page:
-
-- The hero pairs the companion with soft, low-opacity radial "blooms"
-  (`.zuvre-atmosphere` / `.zuvre-bloom`) instead of a flat background —
-  atmosphere without a heavy asset or animation library.
-- "The Ecosystem" is a radial constellation
-  (`ecosystem-constellation.tsx`) — ZUVRE AI at the center, everything
-  else orbiting it — rather than a card grid. This is the visual answer
-  to "communicate that ZUVRE is a living ecosystem rather than a
-  collection of tools."
-- Capabilities are a flowing list, not a wall of identical tiles, and
-  every capability that isn't live yet is labeled **Arriving**, never
-  presented as functional. One footer line makes the same point in
-  prose, so honesty doesn't depend on the reader parsing six repeated
-  badges.
-- Copy avoids corporate landing-page register throughout ("Something is
-  waking up inside ZUVRE," "Come in. It's still becoming itself.")
-  without overclaiming what's actually built.
-
-No new dependency was added to build any of this — the blooms,
-constellation lines, and companion motion are all plain CSS/SVG.
-
-## 15. Extending This System
-
-Anything new — a future capability's UI, an Owner Control Center screen,
-a marketing page — should start from §6's component vocabulary and the
-tokens in `packages/ui/src/tokens.ts`, not from a fresh design. If a
-genuinely new pattern is needed (the constellation visual is itself an
-example: it isn't in §6's original card/button/badge set, but it followed
-the same token discipline), add it here and to `globals.css` rather than
-letting it live as a one-off.
+Unchanged: **Spark** (free), **Ember** (personal), **Atlas** (teams),
+**Orbit** (organizations) — no collision with Nocturne/Aubade or any
+canonical brand element.

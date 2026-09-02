@@ -22,9 +22,13 @@ export default {
         info: "var(--zuvre-info)",
       },
       fontFamily: {
-        display: ["Fraunces", "ui-serif", "Georgia", "serif"],
-        body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["IBM Plex Mono", "ui-monospace", "monospace"],
+        // Reads the CSS variables next/font/google actually loads in
+        // layout.tsx — Cormorant Garamond / Inter / IBM Plex Mono, per
+        // the Brand Handoff Package. "ZUVRE Sans" is not canonical and is
+        // not implemented — see the Canonical Asset & Brand Authority Map §5.
+        display: ["var(--font-display)", "ui-serif", "Georgia", "serif"],
+        body: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: { xl2: "18px" },
       boxShadow: {

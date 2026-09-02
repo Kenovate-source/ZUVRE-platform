@@ -15,7 +15,7 @@ export function ZuvreWordmark({ withTagline = false }: { withTagline?: boolean }
           ZUVRE
         </span>
         {withTagline ? (
-          <span className="zuvre-eyebrow text-[0.65rem] leading-none">An ecosystem, alive</span>
+          <span className="zuvre-eyebrow text-[0.65rem] leading-none">Give Thought a World.</span>
         ) : null}
       </div>
     </div>

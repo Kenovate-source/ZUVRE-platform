@@ -1,24 +1,29 @@
 /**
- * ZUVRE Design Tokens — "Nocturne & Aubade"
- * Full rationale in docs/03-brand-book.md — this file is the executable
- * source of truth; the Brand Book should never drift from it.
+ * ZUVRE Design Tokens
  *
- * ZUVRE has no "light mode." Both worlds are deep and dark — the
- * difference between them is atmosphere and light, not brightness:
+ * Source of truth for Tier 1 values: the ZUVRE Final Canonical Asset &
+ * Brand Authority Map + Brand Handoff Package (2026-09-01). This file
+ * replaces an earlier, self-authored placeholder palette that predated
+ * that package — see git history / STATUS.md for that lineage.
  *
- *   Nocturne — indigo-black night, antique gold, garnet.
- *              The ecosystem at rest: ink, brass instruments, candlelight.
- *   Aubade   — plum-brown dark, warm copper-rose, fading violet.
- *              The ecosystem waking: the hour before sunrise, still dark,
- *              already warming at the edges.
+ * ZUVRE has no "light mode." Both worlds are dark:
+ *   Nocturne — the primary world. Signature accent: ZUVRE Gold.
+ *   Aubade   — the alternate world. NOT a light mode — a dark, organic
+ *              moss/patina world. Signature accents: Patina and Moss.
  *
- * "Aubade" is a dawn song — a piece written for the moment night gives
- * way to morning while it's still dark outside. Both names are ZUVRE's
- * own vocabulary, not generic material/color labels, and neither implies
- * a light or cream background — see docs/03-brand-book.md §1–2.
+ * IMPORTANT INTERPRETIVE NOTE (flagged, not silently assumed): the
+ * governing docs specify exactly one neutral background ramp (Nocturne
+ * 950/900/850/800) and no separate Aubade neutral ramp. This file treats
+ * that ramp as shared infrastructure for both worlds, with Patina/Moss/
+ * Glass as Aubade's differentiating accent layer and Gold/Glass as
+ * Nocturne's. If a distinct Aubade neutral ramp exists or is intended,
+ * this needs correcting — see ZUVRE_Implementation_Readiness_and_Brand_Integration_Plan.md.
  *
- * Every color below was checked against WCAG AA contrast requirements
- * (see docs/03-brand-book.md §4 for the actual computed ratios).
+ * textSecondary, textMuted, borderInteractive, and the four semantic
+ * colors (success/warning/danger/info) have no canonical value in the
+ * Brand Book — it defines identity, not a full UI token system. Each is
+ * derived mathematically from the canonical palette below (WCAG-checked,
+ * not eyeballed) and is clearly NOT a brand-canonical value.
  */
 
 export type ZuvreThemeName = "nocturne" | "aubade";
@@ -33,15 +38,17 @@ export interface ZuvreTheme {
     surfaceRaised: string;
     /** Subtle hairline for decorative dividers/card edges — not for interactive component boundaries. */
     border: string;
-    /** Higher-contrast border for inputs, selects, and other interactive component outlines (WCAG 1.4.11, ≥3:1). */
+    /** Higher-contrast border for inputs, selects, and other interactive component outlines (WCAG 1.4.11, ≥3:1). Derived, not canonical. */
     borderInteractive: string;
     textPrimary: string;
+    /** Derived, not canonical. */
     textSecondary: string;
-    /** Metadata/timestamps/decorative only — not guaranteed to hit AA on its own. */
+    /** Metadata/timestamps/decorative only — derived, not guaranteed AA on its own. */
     textMuted: string;
     accentPrimary: string;
     accentPrimaryContrast: string;
     accentSecondary: string;
+    /** Derived, not canonical. Shared across both worlds (semantic meaning shouldn't shift with theme). */
     success: string;
     warning: string;
     danger: string;
@@ -49,62 +56,87 @@ export interface ZuvreTheme {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Tier 1 — canonical, verbatim from the Brand Handoff Package. Do not alter
+// without an explicit brand-owner decision.
+// ---------------------------------------------------------------------------
+const NOCTURNE_950 = "#0E0C14"; // background
+const NOCTURNE_900 = "#121019"; // surface
+const NOCTURNE_850 = "#181520"; // surfaceRaised
+const NOCTURNE_800 = "#211D29"; // border (decorative)
+const ZUVRE_GOLD = "#D6A64A";
+const IVORY_TEXT = "#F2EEE5";
+const PATINA = "#5E8178";
+const GLASS = "#8DAFA4";
+const MOSS = "#687552";
+
+// ---------------------------------------------------------------------------
+// Derived (not canonical) — see file header note. Computed via WCAG relative
+// luminance, not chosen by eye.
+// ---------------------------------------------------------------------------
+const TEXT_SECONDARY = "#A9A6A2"; // Ivory mixed 32% toward bg — 8.01:1 on 950
+const TEXT_MUTED = "#757272"; // Ivory mixed 55% toward bg — 4.07:1 on 950 (decorative tier)
+const BORDER_INTERACTIVE = "#656263"; // 3.22:1 on 950 — clears WCAG 1.4.11
+const SUCCESS = "#6FA88B"; // brightened Patina family — 7.07:1
+const WARNING = "#CC8A3E"; // shifted orange, distinct from Gold — 6.73:1
+const DANGER = "#C06B57"; // muted terracotta — 5.07:1
+const DARK_ON_ACCENT = NOCTURNE_950; // button-label color on both Gold and Patina — 8.70:1 / 4.52:1 respectively
+
 export const nocturne: ZuvreTheme = {
   name: "nocturne",
   label: "Nocturne",
-  tagline: "Ink, brass, and candlelight.",
+  tagline: "Give Thought a World.",
   colors: {
-    background: "#14121B",
-    surface: "#1E1B27",
-    surfaceRaised: "#28232F",
-    border: "#362F3D",
-    borderInteractive: "#71627A",
-    textPrimary: "#ECE6DD",
-    textSecondary: "#B9AFA0",
-    textMuted: "#8A8079",
-    accentPrimary: "#C89B4A", // antique gold
-    accentPrimaryContrast: "#1B1408",
-    accentSecondary: "#B25A6B", // garnet
-    success: "#4E9A72",
-    warning: "#B98A3E",
-    danger: "#C36B5C",
-    info: "#6E8CB0",
+    background: NOCTURNE_950,
+    surface: NOCTURNE_900,
+    surfaceRaised: NOCTURNE_850,
+    border: NOCTURNE_800,
+    borderInteractive: BORDER_INTERACTIVE,
+    textPrimary: IVORY_TEXT,
+    textSecondary: TEXT_SECONDARY,
+    textMuted: TEXT_MUTED,
+    accentPrimary: ZUVRE_GOLD,
+    accentPrimaryContrast: DARK_ON_ACCENT,
+    accentSecondary: GLASS,
+    success: SUCCESS,
+    warning: WARNING,
+    danger: DANGER,
+    info: GLASS,
   },
 };
 
 export const aubade: ZuvreTheme = {
   name: "aubade",
   label: "Aubade",
-  tagline: "The dark hour before the ecosystem wakes.",
+  tagline: "Give Thought a World.",
   colors: {
-    background: "#1B1416",
-    surface: "#241C1F",
-    surfaceRaised: "#2F2429",
-    border: "#3D2F34",
-    borderInteractive: "#8C6E70",
-    textPrimary: "#EDE3DE",
-    textSecondary: "#C2AFA8",
-    textMuted: "#8F7C77",
-    accentPrimary: "#CB8259", // warm copper-rose, dawn light
-    accentPrimaryContrast: "#1D1109",
-    accentSecondary: "#8C6AA0", // fading-night violet
-    success: "#6FA37E",
-    warning: "#C99552",
-    danger: "#C97462",
-    info: "#7B93A8",
+    background: NOCTURNE_950,
+    surface: NOCTURNE_900,
+    surfaceRaised: NOCTURNE_850,
+    border: NOCTURNE_800,
+    borderInteractive: BORDER_INTERACTIVE,
+    textPrimary: IVORY_TEXT,
+    textSecondary: TEXT_SECONDARY,
+    textMuted: TEXT_MUTED,
+    accentPrimary: PATINA,
+    accentPrimaryContrast: DARK_ON_ACCENT,
+    accentSecondary: MOSS,
+    success: SUCCESS,
+    warning: WARNING,
+    danger: DANGER,
+    info: GLASS,
   },
 };
 
 export const zuvreThemes: Record<ZuvreThemeName, ZuvreTheme> = { nocturne, aubade };
 
 /**
- * Typographic signature: a warm editorial serif for display moments, a
- * clean sans for reading, and a wide-tracked mono for "index card" /
- * ledger-style labels (eyebrows, IDs, technical surfaces) — the mono
- * treatment is a deliberate recognizability device, not just a code font.
+ * Typography — locked per the Brand Handoff Package. "ZUVRE Sans" is not
+ * canonical (appeared only in a composite presentation artifact) and must
+ * not be used — see the Canonical Asset & Brand Authority Map §5.
  */
 export const typography = {
-  fontDisplay: '"Fraunces", ui-serif, Georgia, serif',
+  fontDisplay: '"Cormorant Garamond", ui-serif, Georgia, serif',
   fontBody: '"Inter", ui-sans-serif, system-ui, sans-serif',
   fontMono: '"IBM Plex Mono", ui-monospace, monospace',
   scale: {
@@ -117,12 +149,11 @@ export const typography = {
     "3xl": "1.875rem",
     "4xl": "2.5rem",
   },
-  /** Wide letter-spacing for mono "eyebrow" labels — part of the signature. */
   eyebrowTracking: "0.16em",
 };
 
-// Slightly tighter than a "friendly SaaS" rounding scale — considered and
-// architectural rather than bubbly.
+// Not specified by the Brand Handoff Package (UI-engineering scale, not
+// brand identity) — carried forward unchanged from the prior foundation.
 export const radii = { sm: "5px", md: "9px", lg: "13px", xl: "18px", pill: "999px" };
 
 export const spacing = {
@@ -135,29 +166,22 @@ export const motion = {
   durationBase: "220ms",
   durationSlow: "420ms",
   easingStandard: "cubic-bezier(0.4, 0, 0.2, 1)",
-  /** Slow-start, fast-settle — used for hover/reveal moments; meant to feel
-   * like a considered mechanism (a vault door, a hinge), not a bouncy pop. */
   easingReveal: "cubic-bezier(0.2, 0, 0, 1)",
   reducedMotionQuery: "(prefers-reduced-motion: reduce)",
 };
 
-/**
- * Elevation and glow — both themes use soft, hue-tinted shadows (never flat
- * black) and a very low-opacity accent glow reserved for focus states and
- * a small number of premium "vitrine" moments. This is the one place a
- * gradient is sanctioned — never as a full-bleed background wash.
- */
+/** Shadows re-derived from the canonical Nocturne 950 background hex. */
 export const elevation = {
   nocturne: {
-    shadowCard: "0 1px 2px rgba(8, 6, 12, 0.4), 0 8px 24px -8px rgba(8, 6, 12, 0.55)",
-    shadowModal: "0 24px 64px -16px rgba(6, 4, 10, 0.65)",
-    glowAccent: "0 0 0 3px rgba(200, 155, 74, 0.18)",
-    hairlineHighlight: "inset 0 1px 0 rgba(236, 230, 221, 0.06)",
+    shadowCard: "0 1px 2px rgba(6, 5, 9, 0.4), 0 8px 24px -8px rgba(6, 5, 9, 0.55)",
+    shadowModal: "0 24px 64px -16px rgba(4, 3, 7, 0.65)",
+    glowAccent: "0 0 0 3px rgba(214, 166, 74, 0.18)", // Gold
+    hairlineHighlight: "inset 0 1px 0 rgba(242, 238, 229, 0.06)", // Ivory
   },
   aubade: {
-    shadowCard: "0 1px 2px rgba(10, 6, 7, 0.4), 0 8px 24px -8px rgba(10, 6, 7, 0.55)",
-    shadowModal: "0 24px 64px -16px rgba(8, 5, 6, 0.65)",
-    glowAccent: "0 0 0 3px rgba(203, 130, 89, 0.18)",
-    hairlineHighlight: "inset 0 1px 0 rgba(237, 227, 222, 0.06)",
+    shadowCard: "0 1px 2px rgba(6, 5, 9, 0.4), 0 8px 24px -8px rgba(6, 5, 9, 0.55)",
+    shadowModal: "0 24px 64px -16px rgba(4, 3, 7, 0.65)",
+    glowAccent: "0 0 0 3px rgba(94, 129, 120, 0.22)", // Patina
+    hairlineHighlight: "inset 0 1px 0 rgba(242, 238, 229, 0.06)",
   },
 };

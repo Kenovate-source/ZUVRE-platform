@@ -1,17 +1,24 @@
 /**
- * The ZUVRE Mark — v0.1 foundation.
+ * The ZUVRE Mark — production reconstruction, v1.
  *
- * An open ring (the ecosystem, always in motion, never "closed") with a
- * spark at one edge (the thing being carried around it — a capability, an
- * agent, a thought). A second, smaller inner arc suggests depth — orbits
- * within orbits, the way capabilities will eventually nest and multiply.
+ * Reconstructed from `ZUVRE Monochrome Logo Variants.png` — the one
+ * canonical logo source classified as faithfully vector-viable (flat
+ * shapes, no gradients/glass/chrome bevels). This is a DELIBERATELY
+ * SIMPLIFIED reconstruction: the canonical monochrome mark also carries a
+ * secondary interweaving curved stroke that this version omits, because I
+ * cannot verify that detail's exact geometry precisely enough to
+ * reconstruct it faithfully without a rendering tool to check the result
+ * against the source. What's implemented here — the ring, the bold Z
+ * glyph crossing it, the small accent dot — are the elements I'm
+ * confident about from the canonical reference. This is a controlled
+ * production reconstruction of the approved design, not a new
+ * interpretation — see ZUVRE_Final_Canonical_Asset_Brand_Authority_Map.md §6
+ * and ZUVRE_Implementation_Readiness_and_Brand_Integration_Plan.md §F.4.
  *
- * This is real, rendered geometry — not a placeholder box — but it is a
- * v0.1 foundation mark, built to be structurally sound and reusable
- * (single source, currentColor-free, theme-driven via CSS variables) so a
- * professional visual design pass can refine or replace the exact curves
- * later without anything that references <ZuvreMark /> needing to change.
- * See docs/03-brand-book.md §12.
+ * The full ornate gold/glass primary logo (chrome bevels, glass orbit) is
+ * NOT attempted here — it requires a genuine redesign-to-spec pass with
+ * visual verification tooling this environment doesn't have. That stays
+ * a documented future task, not a silent substitution.
  */
 export function ZuvreMark({ size = 28, className }: { size?: number; className?: string }) {
   return (
@@ -24,23 +31,18 @@ export function ZuvreMark({ size = 28, className }: { size?: number; className?:
       role="img"
       aria-label="ZUVRE"
     >
-      {/* inner depth arc */}
+      {/* ring */}
+      <circle cx="24" cy="24" r="19" stroke="var(--zuvre-accent-primary)" strokeWidth="2" />
+      {/* bold Z glyph */}
       <path
-        d="M22.26 33.85 A10 10 0 0 0 22.26 14.15"
-        stroke="var(--zuvre-border-interactive)"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-        opacity="0.55"
-      />
-      {/* outer ring, open */}
-      <path
-        d="M37.02 34.93 A17 17 0 1 1 37.02 13.07"
+        d="M15 16 H33 L15 32 H33"
         stroke="var(--zuvre-accent-primary)"
-        strokeWidth="2.25"
+        strokeWidth="3.2"
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      {/* the spark, riding the open edge */}
-      <circle cx="37.02" cy="13.07" r="3.4" fill="var(--zuvre-accent-primary)" />
+      {/* accent dot */}
+      <circle cx="33.5" cy="32" r="2.4" fill="var(--zuvre-accent-primary)" />
     </svg>
   );
 }

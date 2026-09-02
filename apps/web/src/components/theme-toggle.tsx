@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 type ZuvreThemeName = "nocturne" | "aubade";
 
 const THEMES: { name: ZuvreThemeName; label: string; tagline: string }[] = [
-  { name: "nocturne", label: "Nocturne", tagline: "Ink, brass, and candlelight." },
-  { name: "aubade", label: "Aubade", tagline: "The dark hour before the ecosystem wakes." },
+  { name: "nocturne", label: "Nocturne", tagline: "Ink, gold, and quiet focus." },
+  { name: "aubade", label: "Aubade", tagline: "Patina, moss, and organic growth — not a light mode." },
 ];
 
 const STORAGE_KEY = "zuvre-theme";

@@ -3,59 +3,59 @@
 @tailwind utilities;
 
 /* =========================================================================
-   ZUVRE THEME VARIABLES — "Nocturne & Aubade"
-   Source of truth: packages/ui/src/tokens.ts. Keep these in sync manually;
-   apps/web can't import TS values into CSS custom properties directly
-   without a build step, so both files are hand-kept identical — see
-   docs/03-brand-book.md §5 for the note on this.
+   ZUVRE THEME VARIABLES
+   Source of truth: packages/ui/src/tokens.ts (see that file's header for
+   the canonical-vs-derived distinction and the interpretive note on
+   Aubade's neutral ramp). Kept hand-synced with tokens.ts — see
+   docs/03-brand-book.md §5.
    ========================================================================= */
 
 :root[data-zuvre-theme="nocturne"] {
-  --zuvre-background: #14121b;
-  --zuvre-surface: #1e1b27;
-  --zuvre-surface-raised: #28232f;
-  --zuvre-border: #362f3d;
-  --zuvre-border-interactive: #71627a;
-  --zuvre-text-primary: #ece6dd;
-  --zuvre-text-secondary: #b9afa0;
-  --zuvre-text-muted: #8a8079;
-  --zuvre-accent-primary: #c89b4a;
-  --zuvre-accent-primary-contrast: #1b1408;
-  --zuvre-accent-secondary: #b25a6b;
-  --zuvre-success: #4e9a72;
-  --zuvre-warning: #b98a3e;
-  --zuvre-danger: #c36b5c;
-  --zuvre-info: #6e8cb0;
-  --zuvre-shadow-card: 0 1px 2px rgba(8, 6, 12, 0.4), 0 8px 24px -8px rgba(8, 6, 12, 0.55);
-  --zuvre-shadow-modal: 0 24px 64px -16px rgba(6, 4, 10, 0.65);
-  --zuvre-glow-accent: 0 0 0 3px rgba(200, 155, 74, 0.18);
-  --zuvre-hairline-highlight: inset 0 1px 0 rgba(236, 230, 221, 0.06);
-  --zuvre-bloom-1: rgba(200, 155, 74, 0.10);
-  --zuvre-bloom-2: rgba(178, 90, 107, 0.08);
+  --zuvre-background: #0e0c14;
+  --zuvre-surface: #121019;
+  --zuvre-surface-raised: #181520;
+  --zuvre-border: #211d29;
+  --zuvre-border-interactive: #656263;
+  --zuvre-text-primary: #f2eee5;
+  --zuvre-text-secondary: #a9a6a2;
+  --zuvre-text-muted: #757272;
+  --zuvre-accent-primary: #d6a64a;
+  --zuvre-accent-primary-contrast: #0e0c14;
+  --zuvre-accent-secondary: #8dafa4;
+  --zuvre-success: #6fa88b;
+  --zuvre-warning: #cc8a3e;
+  --zuvre-danger: #c06b57;
+  --zuvre-info: #8dafa4;
+  --zuvre-shadow-card: 0 1px 2px rgba(6, 5, 9, 0.4), 0 8px 24px -8px rgba(6, 5, 9, 0.55);
+  --zuvre-shadow-modal: 0 24px 64px -16px rgba(4, 3, 7, 0.65);
+  --zuvre-glow-accent: 0 0 0 3px rgba(214, 166, 74, 0.18);
+  --zuvre-hairline-highlight: inset 0 1px 0 rgba(242, 238, 229, 0.06);
+  --zuvre-bloom-1: rgba(214, 166, 74, 0.10);
+  --zuvre-bloom-2: rgba(141, 175, 164, 0.08);
 }
 
 :root[data-zuvre-theme="aubade"] {
-  --zuvre-background: #1b1416;
-  --zuvre-surface: #241c1f;
-  --zuvre-surface-raised: #2f2429;
-  --zuvre-border: #3d2f34;
-  --zuvre-border-interactive: #8c6e70;
-  --zuvre-text-primary: #ede3de;
-  --zuvre-text-secondary: #c2afa8;
-  --zuvre-text-muted: #8f7c77;
-  --zuvre-accent-primary: #cb8259;
-  --zuvre-accent-primary-contrast: #1d1109;
-  --zuvre-accent-secondary: #8c6aa0;
-  --zuvre-success: #6fa37e;
-  --zuvre-warning: #c99552;
-  --zuvre-danger: #c97462;
-  --zuvre-info: #7b93a8;
-  --zuvre-shadow-card: 0 1px 2px rgba(10, 6, 7, 0.4), 0 8px 24px -8px rgba(10, 6, 7, 0.55);
-  --zuvre-shadow-modal: 0 24px 64px -16px rgba(8, 5, 6, 0.65);
-  --zuvre-glow-accent: 0 0 0 3px rgba(203, 130, 89, 0.18);
-  --zuvre-hairline-highlight: inset 0 1px 0 rgba(237, 227, 222, 0.06);
-  --zuvre-bloom-1: rgba(203, 130, 89, 0.10);
-  --zuvre-bloom-2: rgba(140, 106, 160, 0.08);
+  --zuvre-background: #0e0c14;
+  --zuvre-surface: #121019;
+  --zuvre-surface-raised: #181520;
+  --zuvre-border: #211d29;
+  --zuvre-border-interactive: #656263;
+  --zuvre-text-primary: #f2eee5;
+  --zuvre-text-secondary: #a9a6a2;
+  --zuvre-text-muted: #757272;
+  --zuvre-accent-primary: #5e8178;
+  --zuvre-accent-primary-contrast: #0e0c14;
+  --zuvre-accent-secondary: #687552;
+  --zuvre-success: #6fa88b;
+  --zuvre-warning: #cc8a3e;
+  --zuvre-danger: #c06b57;
+  --zuvre-info: #8dafa4;
+  --zuvre-shadow-card: 0 1px 2px rgba(6, 5, 9, 0.4), 0 8px 24px -8px rgba(6, 5, 9, 0.55);
+  --zuvre-shadow-modal: 0 24px 64px -16px rgba(4, 3, 7, 0.65);
+  --zuvre-glow-accent: 0 0 0 3px rgba(94, 129, 120, 0.22);
+  --zuvre-hairline-highlight: inset 0 1px 0 rgba(242, 238, 229, 0.06);
+  --zuvre-bloom-1: rgba(94, 129, 120, 0.12);
+  --zuvre-bloom-2: rgba(104, 117, 82, 0.10);
 }
 
 body {
@@ -69,10 +69,8 @@ body {
 }
 
 /* =========================================================================
-   ZUVRE COMPONENT VOCABULARY
-   Shared visual language every surface — including future capabilities —
-   should build on rather than inventing its own card/button/badge
-   treatment. See docs/03-brand-book.md §6.
+   ZUVRE COMPONENT VOCABULARY — unchanged mechanism, new values only.
+   See docs/03-brand-book.md §6.
    ========================================================================= */
 
 .zuvre-eyebrow {
@@ -183,10 +181,20 @@ body {
   border-radius: 9px;
 }
 
+/* A visually unmistakable "real asset not yet available" slot — used
+   where a production asset (e.g. Zuri) doesn't exist yet, so a pending
+   state can never be confused with finished content. Dashed border,
+   muted, no shadow/glow. See docs/03-brand-book.md §13. */
+.zuvre-pending-slot {
+  background-color: transparent;
+  border: 1px dashed var(--zuvre-border-interactive);
+  border-radius: 13px;
+  color: var(--zuvre-text-muted);
+}
+
 /* =========================================================================
-   ATMOSPHERE — hero blooms, constellation lines, mascot motion
-   Pure CSS, no new dependencies. Every animation respects reduced-motion
-   via the global rule above.
+   ATMOSPHERE — hero blooms, constellation lines, mascot motion.
+   Re-hued to canonical values; mechanism unchanged.
    ========================================================================= */
 
 .zuvre-atmosphere {

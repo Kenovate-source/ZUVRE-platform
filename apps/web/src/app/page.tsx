@@ -1,15 +1,17 @@
 import { ZuvreWordmark } from "@/components/zuvre-wordmark";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { ZuvreCompanion } from "@/components/zuvre-companion";
+import { ZuriCompanion } from "@/components/zuri-companion";
 import { EcosystemConstellation } from "@/components/ecosystem-constellation";
+import { IconImage, IconWebsite, IconAiModel, IconWriting } from "@/components/icons";
+import { IconCheck } from "@/components/icons/navigation-ui";
 
 const CAPABILITIES = [
-  { name: "AI Chat", status: "live" as const, note: "Runs through the real capability contract — see docs/09-capability-system.md." },
-  { name: "Image Generation", status: "arriving" as const, note: "Same execution pipeline, same permission model, no new UI required." },
-  { name: "Website & App Building", status: "arriving" as const, note: "One grant model. One audit trail. One visual language." },
-  { name: "Games", status: "arriving" as const, note: "Not forgotten — the contract was designed to hold it from day one." },
-  { name: "Research", status: "arriving" as const, note: "Sources, comparisons, structured findings — able to work outside ZUVRE when you allow it." },
-  { name: "Stickers", status: "arriving" as const, note: "Made, not just used." },
+  { name: "AI Chat", status: "live" as const, note: "Runs through the real capability contract — see docs/09-capability-system.md.", Icon: IconAiModel },
+  { name: "Image Generation", status: "arriving" as const, note: "Same execution pipeline, same permission model, no new UI required.", Icon: IconImage },
+  { name: "Website & App Building", status: "arriving" as const, note: "One grant model. One audit trail. One visual language.", Icon: IconWebsite },
+  { name: "Writing & Text", status: "arriving" as const, note: "Rewrite, improve, summarize, expand — the same contract, a different capability.", Icon: IconWriting },
+  { name: "Research", status: "arriving" as const, note: "Sources, comparisons, structured findings — able to work outside ZUVRE when you allow it.", Icon: null },
+  { name: "Stickers", status: "arriving" as const, note: "Made, not just used.", Icon: null },
 ];
 
 export default function HomePage() {
@@ -48,7 +50,7 @@ export default function HomePage() {
           </div>
 
           <div className="flex justify-center sm:justify-end">
-            <ZuvreCompanion size={140} />
+            <ZuriCompanion size={140} pose="welcoming" expression="reassuring" />
           </div>
         </div>
       </section>
@@ -82,11 +84,19 @@ export default function HomePage() {
         <div className="zuvre-card divide-y divide-border">
           {CAPABILITIES.map((cap) => (
             <div key={cap.name} className="flex items-center justify-between gap-4 px-5 py-4">
-              <div>
-                <h3 className="font-display text-base text-text-primary">{cap.name}</h3>
-                <p className="mt-0.5 text-sm text-text-secondary">{cap.note}</p>
+              <div className="flex items-center gap-3">
+                {cap.Icon ? (
+                  <cap.Icon size={20} className="shrink-0 text-text-secondary" />
+                ) : (
+                  <span className="w-5 shrink-0" aria-hidden="true" />
+                )}
+                <div>
+                  <h3 className="font-display text-base text-text-primary">{cap.name}</h3>
+                  <p className="mt-0.5 text-sm text-text-secondary">{cap.note}</p>
+                </div>
               </div>
               <span className={cap.status === "live" ? "zuvre-badge zuvre-badge-accent shrink-0" : "zuvre-badge shrink-0"}>
+                {cap.status === "live" ? <IconCheck size={13} /> : null}
                 {cap.status === "live" ? "Live" : "Arriving"}
               </span>
             </div>

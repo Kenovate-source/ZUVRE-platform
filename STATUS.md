@@ -32,26 +32,44 @@ claims a test ran that didn't, or a package installed that wasn't.
 - **Auth foundation**: RBAC permission matching, JWT session issuing/
   verification, scrypt password hashing, and an owner-action audit
   wrapper — `packages/auth`.
-- **Design system tokens**: two complete, named themes (Nocturne/Aubade —
-  both dark-native, no light/cream mode) as both a TypeScript source of
-  truth and CSS variables — `packages/ui/src/tokens.ts`,
-  `apps/web/src/app/globals.css`. Every text/background pairing is
-  checked against real WCAG contrast math, not eyeballed — see
-  `docs/03-brand-book.md` §4.
-- **Brand identity system**: a real (not placeholder-box) SVG logo mark
-  (`apps/web/src/components/zuvre-mark.tsx`), wordmark lockup
-  (`zuvre-wordmark.tsx`), and a mood-aware mascot/companion component
-  (`zuvre-companion.tsx`) sharing the mark's "spark" motif — all
-  functioning, theme-aware, and reusable. These are v0.1 foundation
-  assets: real, rendered geometry that a professional visual-design pass
-  should still refine — see `docs/03-brand-book.md` §12–13. Nothing
-  about them is faked or a static image placeholder.
+- **Design system tokens**: canonical ZUVRE brand tokens (Tier 1 — exact
+  hex from the Brand Handoff Package: Nocturne 950–800, ZUVRE Gold,
+  Ivory, Patina, Glass, Moss) plus derived UI tokens (text-secondary/
+  muted, borderInteractive, semantic colors) computed and WCAG-checked,
+  not eyeballed — `packages/ui/src/tokens.ts`, `apps/web/src/app/globals.css`.
+  This replaced an earlier self-authored placeholder palette (different
+  hex values entirely) once the canonical Brand Handoff Package existed
+  — see `docs/03-brand-book.md` §3.
+- **Real font loading**: Cormorant Garamond / Inter / IBM Plex Mono via
+  `next/font/google` in `apps/web/src/app/layout.tsx`. Previously these
+  typefaces (a different set — Fraunces, not Cormorant Garamond) were
+  only declared as CSS strings with nothing actually loading them.
+- **Brand identity system**: a production-reconstructed logo mark
+  (`zuvre-mark.tsx`, rebuilt from the canonical monochrome variant —
+  deliberately simplified, one secondary stroke detail omitted and
+  documented as such), wordmark with the real tagline ("Give Thought a
+  World."), and a Zuri integration contract
+  (`zuri-companion.tsx`) that renders an explicit, unmistakable
+  "asset pending" state rather than a fabricated character illustration
+  — see `docs/03-brand-book.md` §5–6 and that file's own header comment.
+- **Icon system**: 20 real SVG icon components across Core (8),
+  Capability (6, AI Agent explicitly excluded), and Navigation/UI (6,
+  from the canonical Set 2 only) — `apps/web/src/components/icons/`.
+  Curated subsets, not the full ~60+ icon library — built
+  implementation-driven, wired into real usage in `page.tsx`'s
+  capability list, not left as unused code. See `docs/03-brand-book.md` §7.
+- **Motion system documentation**: all 8 canonical sequences specified
+  (purpose/trigger/duration/easing/states/reduced-motion/format) in
+  `docs/10-motion-system.md`. Only one (UI/Interface Transitions) is
+  actually implemented — the rest are specs, built only when a real
+  surface needs them.
 - **Landing experience**: a real, working landing page
   (`apps/web/src/app/page.tsx`) built from atmospheric sections (hero
-  with the companion, a radial "ecosystem constellation" visual replacing
-  a card grid, a flowing capability list) rather than a generic
-  logo→headline→card-grid SaaS layout. Every capability not yet live is
-  labeled "Arriving," never presented as functional.
+  with the Zuri integration point, a radial "ecosystem constellation"
+  visual replacing a card grid, a flowing capability list with real
+  icons) rather than a generic logo→headline→card-grid SaaS layout.
+  Every capability not yet live is labeled "Arriving," never presented
+  as functional.
 - **One real, end-to-end capability**: `ai.chat`
   (`apps/web/src/server/capabilities/ai-chat.ts`), registered via
   `bootstrapCapabilities()`, executable through a real API route
@@ -80,15 +98,30 @@ claims a test ran that didn't, or a package installed that wasn't.
   no Stripe/etc. integration).
 - 15 of the 20 requested documents are outlined-and-linked rather than
   standalone (see `docs/README.md` for exactly which, and why).
-- **A professional visual-design pass on the logo mark and mascot.**
-  Both are real, working, theme-aware components — not fabricated or
-  faked — but their exact silhouette/geometry is a v0.1 foundation
-  built by an engineer, not an illustrator. The mascot's `mood` prop
-  currently supports only `"idle"`; the architecture is ready for more
-  states, none are built yet. Nothing in the landing page or brand
-  system depends on this changing — a designer can replace the SVG
-  contents of `zuvre-mark.tsx` / `zuvre-companion.tsx` without touching
-  anything that renders them.
+- **A professional production pass on the logo mark.** `zuvre-mark.tsx`
+  is a real, working reconstruction of the canonical monochrome variant,
+  but it's a deliberately simplified one — it omits a secondary
+  interweaving stroke detail present in the canonical reference because
+  that detail couldn't be verified precisely enough without a rendering
+  tool. The full ornate gold/glass chrome primary logo isn't attempted
+  at all — see `docs/03-brand-book.md` §5.
+- **Zuri.** No production-ready transparent asset exists.
+  `zuri-companion.tsx` implements the real integration contract (size,
+  the 12 canonical expressions, the 16 canonical poses as TypeScript
+  types) but deliberately renders an explicit "asset pending" state, not
+  a fabricated character. See `docs/03-brand-book.md` §6.
+- **AI Agent has no icon.** Both proposals (the original robot-head
+  glyph and an "Orbit & Execute" replacement) were rejected. The
+  capability icon index deliberately doesn't export one — see
+  `apps/web/src/components/icons/capability/index.ts`'s header comment.
+- **The rest of each icon family.** 20 icons are real and implemented
+  (8 Core, 6 Capability, 6 Navigation/UI) — a curated subset, not the
+  full ~60+ icon library across all three canonical sheets. Built
+  implementation-driven: more are added as real surfaces need them, not
+  in bulk ahead of demand.
+- **7 of 8 motion sequences** are specifications only (see
+  `docs/10-motion-system.md`) — no video/Lottie assets exist, and most
+  don't have a real UI surface yet to attach CSS/JS motion to.
 
 ## Tests
 
