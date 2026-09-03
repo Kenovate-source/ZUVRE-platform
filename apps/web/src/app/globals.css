@@ -193,11 +193,12 @@ body {
 }
 
 /* =========================================================================
-   ATMOSPHERE — hero blooms, constellation lines, mascot motion.
-   Re-hued to canonical values; mechanism unchanged.
+   THE LIVING ZUVRE UNIVERSE — reusable atmospheric background system.
+   See apps/web/src/components/universe/. Supersedes the earlier static
+   .zuvre-bloom mechanism entirely (no parallel/duplicate system kept).
    ========================================================================= */
 
-.zuvre-atmosphere {
+.zuvre-universe {
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -205,26 +206,61 @@ body {
   z-index: 0;
 }
 
-.zuvre-bloom {
+/* Layer 1 — atmospheric depth. Multiple soft, low-opacity radial fields
+   rather than a flat color or a single blob — restrained, not neon. */
+.zuvre-universe-depth {
   position: absolute;
-  border-radius: 999px;
-  filter: blur(60px);
+  inset: -10%;
 }
 
-.zuvre-bloom-a {
-  width: 480px;
-  height: 480px;
-  top: -160px;
-  left: -120px;
-  background: radial-gradient(circle, var(--zuvre-bloom-1), transparent 70%);
+.zuvre-universe-depth-soft {
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 10%, var(--zuvre-bloom-1), transparent 65%),
+    radial-gradient(ellipse 50% 35% at 90% 80%, var(--zuvre-bloom-2), transparent 65%);
 }
 
-.zuvre-bloom-b {
-  width: 420px;
-  height: 420px;
-  top: 40px;
-  right: -140px;
-  background: radial-gradient(circle, var(--zuvre-bloom-2), transparent 70%);
+.zuvre-universe-depth-medium {
+  background:
+    radial-gradient(ellipse 65% 45% at 12% 8%, var(--zuvre-bloom-1), transparent 65%),
+    radial-gradient(ellipse 55% 40% at 92% 30%, var(--zuvre-bloom-2), transparent 65%),
+    radial-gradient(ellipse 50% 50% at 50% 100%, var(--zuvre-bloom-1), transparent 70%);
+}
+
+.zuvre-universe-depth-strong {
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 0%, var(--zuvre-bloom-1), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 100% 60%, var(--zuvre-bloom-2), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 30% 100%, var(--zuvre-bloom-2), transparent 65%);
+}
+
+/* Layer 3 — orbital arcs. Extremely slow, linear (constant angular
+   velocity reads as "orbit," not "animation"). Disabled under reduced
+   motion — the arcs themselves (static) still provide depth. */
+@keyframes zuvre-orbit-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.zuvre-orbital-arc-a { animation: zuvre-orbit-rotate 140s linear infinite; }
+.zuvre-orbital-arc-b { animation: zuvre-orbit-rotate 200s linear infinite reverse; }
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-orbital-arc-a, .zuvre-orbital-arc-b { animation: none; }
+}
+
+/* Layer 5 — cursor-following ambient light. Defaults to a centered glow
+   when --pointer-x/--pointer-y haven't been set yet (first paint, touch
+   devices, reduced motion) so it never looks broken/empty. */
+.zuvre-ambient-light {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle 320px at var(--pointer-x, 50%) var(--pointer-y, 30%),
+    var(--zuvre-bloom-1),
+    transparent 70%
+  );
+  transition: background-position 900ms cubic-bezier(0.2, 0, 0, 1);
+  opacity: 0.8;
 }
 
 @keyframes zuvre-breathe {
@@ -258,10 +294,111 @@ body {
   stroke: var(--zuvre-border-interactive);
   stroke-width: 1;
   opacity: 0.5;
+  transition: opacity 320ms ease, stroke 320ms ease;
+}
+
+.zuvre-constellation-line-active {
+  stroke: var(--zuvre-accent-primary);
+  opacity: 0.9;
+}
+
+.zuvre-constellation-line-dimmed {
+  opacity: 0.18;
 }
 
 .zuvre-constellation-node {
   fill: var(--zuvre-surface-raised);
   stroke: var(--zuvre-border-interactive);
   stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: fill 320ms ease, stroke 320ms ease;
+}
+
+.zuvre-constellation-node-active {
+  fill: var(--zuvre-accent-primary);
+  stroke: var(--zuvre-accent-primary);
+}
+
+@keyframes zuvre-node-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+
+.zuvre-constellation-node-breathe {
+  animation: zuvre-node-breathe 4400ms ease-in-out infinite;
+  animation-delay: var(--breathe-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-constellation-node-breathe { animation: none; }
+}
+
+.zuvre-constellation-pulse {
+  fill: var(--zuvre-accent-primary);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-constellation-pulse { display: none; }
+}
+
+.zuvre-constellation-label {
+  transition: color 320ms ease, opacity 320ms ease;
+}
+
+.zuvre-constellation-label-active {
+  color: var(--zuvre-text-primary);
+}
+
+.zuvre-constellation-label-dimmed {
+  opacity: 0.55;
+}
+
+/* Spotlight button — see components/spotlight-button.tsx. Interaction-
+   driven (hover), not a continuous animation, so it stays active under
+   prefers-reduced-motion per the brief's own distinction. */
+.zuvre-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.zuvre-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 90px at var(--spot-x, 50%) var(--spot-y, 50%), rgba(242, 238, 229, 0.16), transparent 70%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+
+.zuvre-spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Restrained hover feedback for interactive cards and list rows — plain
+   CSS, no cursor-tracking needed for these (that would be excess per the
+   "every interaction must have a purpose" rule). Scoped to explicit
+   modifier classes rather than a blanket .zuvre-card:hover, so it doesn't
+   also affect non-interactive uses like the theme toggle's pill. */
+.zuvre-card-interactive {
+  transition: transform 220ms cubic-bezier(0.2, 0, 0, 1), border-color 220ms ease;
+}
+
+.zuvre-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--zuvre-border-interactive);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-card-interactive:hover { transform: none; }
+}
+
+.zuvre-list-row {
+  transition: background-color 220ms ease;
+}
+
+.zuvre-list-row:hover {
+  background-color: var(--zuvre-surface-raised);
 }

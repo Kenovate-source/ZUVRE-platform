@@ -2,6 +2,8 @@ import { ZuvreWordmark } from "@/components/zuvre-wordmark";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ZuriCompanion } from "@/components/zuri-companion";
 import { EcosystemConstellation } from "@/components/ecosystem-constellation";
+import { SpotlightButton } from "@/components/spotlight-button";
+import { ZuvreUniverseBackground } from "@/components/universe";
 import { IconImage, IconWebsite, IconAiModel, IconWriting } from "@/components/icons";
 import { IconCheck } from "@/components/icons/navigation-ui";
 
@@ -25,10 +27,7 @@ export default function HomePage() {
 
       {/* ================= HERO ================= */}
       <section className="relative mx-auto max-w-5xl overflow-hidden px-6 pb-20 pt-8">
-        <div className="zuvre-atmosphere">
-          <div className="zuvre-bloom zuvre-bloom-a" />
-          <div className="zuvre-bloom zuvre-bloom-b" />
-        </div>
+        <ZuvreUniverseBackground variant="hero" />
 
         <div className="relative z-10 grid gap-10 sm:grid-cols-[1fr_auto] sm:items-center">
           <div className="flex flex-col items-start gap-6">
@@ -44,8 +43,8 @@ export default function HomePage() {
               than what's switched on today.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
-              <button className="zuvre-button-primary zuvre-focus-ring">Enter ZUVRE</button>
-              <button className="zuvre-button-secondary zuvre-focus-ring">What is ZUVRE?</button>
+              <SpotlightButton variant="primary">Enter ZUVRE</SpotlightButton>
+              <SpotlightButton variant="secondary">What is ZUVRE?</SpotlightButton>
             </div>
           </div>
 
@@ -56,9 +55,10 @@ export default function HomePage() {
       </section>
 
       {/* ================= WHAT IS ZUVRE ================= */}
-      <section className="mx-auto max-w-3xl px-6 pb-24">
-        <p className="zuvre-eyebrow mb-4">What is ZUVRE?</p>
-        <p className="font-display text-2xl leading-relaxed text-text-primary sm:text-3xl">
+      <section className="relative mx-auto max-w-3xl overflow-hidden px-6 pb-24">
+        <ZuvreUniverseBackground variant="spacious" />
+        <p className="relative z-10 zuvre-eyebrow mb-4">What is ZUVRE?</p>
+        <p className="relative z-10 font-display text-2xl leading-relaxed text-text-primary sm:text-3xl">
           ZUVRE is the substrate underneath — the thing that lets an idea
           become a conversation, a conversation become a capability, and a
           capability become something you can hold, share, and build on top
@@ -68,10 +68,13 @@ export default function HomePage() {
       </section>
 
       {/* ================= THE ECOSYSTEM ================= */}
-      <section className="mx-auto max-w-3xl px-6 pb-24">
-        <p className="zuvre-eyebrow mb-8 text-center">The Ecosystem</p>
-        <EcosystemConstellation />
-        <p className="mx-auto mt-8 max-w-md text-center text-sm text-text-secondary">
+      <section className="relative mx-auto max-w-3xl overflow-hidden px-6 pb-24">
+        <ZuvreUniverseBackground variant="ecosystem" />
+        <p className="relative z-10 zuvre-eyebrow mb-8 text-center">The Ecosystem</p>
+        <div className="relative z-10">
+          <EcosystemConstellation />
+        </div>
+        <p className="relative z-10 mx-auto mt-8 max-w-md text-center text-sm text-text-secondary">
           ZUVRE AI is live in Phase 0. Everything orbiting it — agents,
           creation, research, your own control center — is architected and
           arriving as the ecosystem grows.
@@ -83,7 +86,7 @@ export default function HomePage() {
         <p className="zuvre-eyebrow mb-6">Capabilities</p>
         <div className="zuvre-card divide-y divide-border">
           {CAPABILITIES.map((cap) => (
-            <div key={cap.name} className="flex items-center justify-between gap-4 px-5 py-4">
+            <div key={cap.name} className="zuvre-list-row flex items-center justify-between gap-4 px-5 py-4">
               <div className="flex items-center gap-3">
                 {cap.Icon ? (
                   <cap.Icon size={20} className="shrink-0 text-text-secondary" />
@@ -106,7 +109,7 @@ export default function HomePage() {
 
       {/* ================= AGENTS + ZUVRE AI ================= */}
       <section className="mx-auto grid max-w-3xl gap-6 px-6 pb-24 sm:grid-cols-2">
-        <div className="zuvre-card p-6">
+        <div className="zuvre-card zuvre-card-interactive p-6">
           <p className="zuvre-eyebrow mb-3">Agents</p>
           <p className="text-sm text-text-secondary">
             Agents work across ZUVRE — and, with your explicit permission,
@@ -115,7 +118,7 @@ export default function HomePage() {
             decide what it can touch.
           </p>
         </div>
-        <div className="zuvre-card p-6">
+        <div className="zuvre-card zuvre-card-interactive p-6">
           <p className="zuvre-eyebrow mb-3">ZUVRE AI</p>
           <p className="text-sm text-text-secondary">
             A conversational personality that adapts to how you talk —
@@ -138,18 +141,16 @@ export default function HomePage() {
               admin panel. Nothing acts on your behalf silently.
             </p>
           </div>
-          <button className="zuvre-button-secondary zuvre-focus-ring shrink-0">Read the Product Bible</button>
+          <SpotlightButton variant="secondary" className="shrink-0">Read the Product Bible</SpotlightButton>
         </div>
       </section>
 
       {/* ================= FINAL CTA ================= */}
       <section className="relative mx-auto max-w-3xl overflow-hidden px-6 pb-16 pt-8 text-center">
-        <div className="zuvre-atmosphere">
-          <div className="zuvre-bloom zuvre-bloom-a" style={{ left: "auto", right: "-100px", top: "auto", bottom: "-160px" }} />
-        </div>
+        <ZuvreUniverseBackground variant="cta" />
         <div className="relative z-10 flex flex-col items-center gap-6">
           <h2 className="font-display text-3xl text-text-primary">Come in. It's still becoming itself.</h2>
-          <button className="zuvre-button-primary zuvre-focus-ring">Enter ZUVRE</button>
+          <SpotlightButton variant="primary">Enter ZUVRE</SpotlightButton>
         </div>
       </section>
 
