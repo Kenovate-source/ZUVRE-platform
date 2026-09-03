@@ -42,7 +42,14 @@ export function EcosystemConstellation() {
     return () => clearInterval(id);
   }, [reducedMotion]);
 
-  const pulseTarget = SATELLITES[pulseIndex];
+  // SATELLITES[pulseIndex] is always in-bounds at runtime — pulseIndex is
+  // only ever set via `(i + 1) % SATELLITES.length` above — but
+  // noUncheckedIndexedAccess (tsconfig.base.json) can't prove that for a
+  // non-literal index. Falling back to SATELLITES[0], a literal index
+  // TypeScript CAN statically prove is defined on this 6-element `as
+  // const` tuple, makes the existing invariant explicit instead of
+  // asserting past the checker. The fallback never actually triggers.
+  const pulseTarget = SATELLITES[pulseIndex] ?? SATELLITES[0];
   const pulsePath = `M ${CENTER.x} ${CENTER.y} L ${pulseTarget.x} ${pulseTarget.y * 0.75}`;
 
   return (

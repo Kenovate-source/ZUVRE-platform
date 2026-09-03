@@ -96,10 +96,16 @@ export function ThoughtParticles({ density = "normal" }: { density?: Density }) 
       }
 
       const maxDist = 140;
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const a = particles[i];
-          const bp = particles[j];
+      // .entries() rather than index-based access — with
+      // noUncheckedIndexedAccess (tsconfig.base.json), particles[i] would
+      // type as Particle | undefined even though the loop bounds already
+      // guarantee validity. Iterating avoids the indexing question
+      // entirely instead of asserting past it. `j <= i` preserves the
+      // original "each unique pair checked once" behavior of the old
+      // `j = i + 1` loop.
+      for (const [i, a] of particles.entries()) {
+        for (const [j, bp] of particles.entries()) {
+          if (j <= i) continue;
           const dx = a.x - bp.x;
           const dy = a.y - bp.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
