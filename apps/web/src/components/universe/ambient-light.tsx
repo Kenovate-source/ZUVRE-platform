@@ -34,14 +34,27 @@ export function AmbientLight() {
       if (!rafPending) {
         rafPending = true;
         requestAnimationFrame(() => {
-          const rect = el!.parentElement!.getBoundingClientRect();
+          // Re-read ref.current fresh here rather than relying on the
+          // outer `el` — TypeScript's non-null narrowing from the guard
+          // above doesn't survive across this nested closure boundary
+          // (confirmed: even `const` narrowing is closure-local), and a
+          // real guard is safer than an assertion regardless — the node
+          // could theoretically unmount between the event firing and this
+          // callback running. `parentElement` gets the same treatment: an
+          // explicit guard instead of a blind `!`, since nothing upstream
+          // actually establishes it's non-null.
+          const node = ref.current;
+          if (!node) return;
+          const parent = node.parentElement;
+          if (!parent) return;
+          const rect = parent.getBoundingClientRect();
           const x = ((lastX - rect.left) / rect.width) * 100;
           const y = ((lastY - rect.top) / rect.height) * 100;
           // Only move if the pointer is roughly within this section —
           // keeps the effect restrained rather than tracking globally.
           if (x >= -20 && x <= 120 && y >= -20 && y <= 120) {
-            el!.style.setProperty("--pointer-x", `${x}%`);
-            el!.style.setProperty("--pointer-y", `${y}%`);
+            node.style.setProperty("--pointer-x", `${x}%`);
+            node.style.setProperty("--pointer-y", `${y}%`);
           }
           rafPending = false;
         });

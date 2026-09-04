@@ -23,12 +23,19 @@ export function SpotlightButton({
   const ref = useRef<HTMLButtonElement>(null);
 
   function onMouseMove(e: MouseEvent<HTMLButtonElement>) {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
+    // Capture into a local const and guard on it directly, rather than
+    // checking indirectly via getBoundingClientRect()'s result — that
+    // told TypeScript nothing about ref.current itself (a mutable
+    // property), which is why the two lines below previously needed
+    // non-null assertions. Narrowing a local const persists for the rest
+    // of this function (no nested closure here), so no assertions needed.
+    const node = ref.current;
+    if (!node) return;
+    const rect = node.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    ref.current!.style.setProperty("--spot-x", `${x}%`);
-    ref.current!.style.setProperty("--spot-y", `${y}%`);
+    node.style.setProperty("--spot-x", `${x}%`);
+    node.style.setProperty("--spot-y", `${y}%`);
   }
 
   const base = variant === "primary" ? "zuvre-button-primary" : "zuvre-button-secondary";

@@ -53,6 +53,15 @@ export function ThoughtParticles({ density = "normal" }: { density?: Density }) 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let particles: Particle[] = [];
 
+    // canvas/parent/ctx are guarded above (`if (!canvas || !parent) return`,
+    // `if (!ctx) return`) and captured as stable `const` references for
+    // this effect's whole lifetime — never reassigned or re-derived from a
+    // ref later, unlike ambient-light.tsx's pointer handler. The `!` uses
+    // below (verified against the real compiler both with and without
+    // them) are required only because TypeScript's narrowing doesn't
+    // survive into these sibling function declarations' closures, not
+    // because the guard doesn't actually hold — it does, for the entire
+    // effect run.
     function resize() {
       const rect = parent!.getBoundingClientRect();
       width = rect.width;
@@ -157,8 +166,9 @@ export function ThoughtParticles({ density = "normal" }: { density?: Density }) 
     }
 
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !document.hidden) start();
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting && !document.hidden) start();
         else stop();
       },
       { threshold: 0 }
