@@ -6,6 +6,7 @@ import { SpotlightButton } from "@/components/spotlight-button";
 import { ZuvreUniverseBackground } from "@/components/universe";
 import { IconImage, IconWebsite, IconAiModel, IconWriting } from "@/components/icons";
 import { IconCheck } from "@/components/icons/navigation-ui";
+import Link from "next/link";
 
 const CAPABILITIES = [
   { name: "AI Chat", status: "live" as const, note: "Runs through the real capability contract — see docs/09-capability-system.md.", Icon: IconAiModel },
@@ -43,7 +44,9 @@ export default function HomePage() {
               than what's switched on today.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
-              <SpotlightButton variant="primary">Enter ZUVRE</SpotlightButton>
+              <Link href="/register" className="zuvre-button-primary zuvre-focus-ring zuvre-spotlight">
+                Enter ZUVRE
+              </Link>
               <SpotlightButton variant="secondary">What is ZUVRE?</SpotlightButton>
             </div>
           </div>
@@ -150,7 +153,9 @@ export default function HomePage() {
         <ZuvreUniverseBackground variant="cta" />
         <div className="relative z-10 flex flex-col items-center gap-6">
           <h2 className="font-display text-3xl text-text-primary">Come in. It's still becoming itself.</h2>
-          <SpotlightButton variant="primary">Enter ZUVRE</SpotlightButton>
+          <Link href="/register" className="zuvre-button-primary zuvre-focus-ring zuvre-spotlight">
+            Enter ZUVRE
+          </Link>
         </div>
       </section>
 

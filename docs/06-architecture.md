@@ -114,3 +114,29 @@ Primary target: Vercel, for `apps/web`. The app has no code that assumes
 Vercel-specific APIs beyond what Next.js itself provides, so a future move
 to a different host is a deployment-config change, not a rewrite. See
 `14-deployment-guide.md`.
+
+## 11. Authentication, Workspaces & Worlds (Phase 1)
+
+Full rationale: ADR-0004. Summary for this doc's purposes:
+
+- `apps/web/src/server/auth/session.ts` — Next.js-specific cookie/JWT
+  session layer wrapping `packages/auth`'s framework-agnostic primitives.
+  A DB `Session` row (not just JWT expiry) is the source of truth for
+  revocation.
+- `apps/web/src/server/auth/workspace-access.ts` — the single
+  authorization boundary every workspace-scoped route must call.
+  Never trust a client-supplied `workspaceId`.
+- `apps/web/src/middleware.ts` does a cheap, Edge-compatible JWT check;
+  the `(app)` route group layout does the authoritative, DB-backed check.
+  Two layers, deliberately, not duplication — see the file's own comment.
+- `World` (`packages/db/prisma/schema.prisma`) is the "Give Thought a
+  World" concept at the data layer — a named container, scoped to a
+  workspace, that `Conversation`s optionally belong to.
+- `apps/web/src/server/capabilities/run-capability.ts` factors the
+  grant-check/execute/record logic out of the capability-execute route
+  so `apps/web/src/app/api/chat/route.ts` (which layers `Conversation`/
+  `Message` persistence around the unchanged `ai.chat` capability) can
+  reuse it instead of duplicating it.
+
+Full detail: `ZUVRE_Phase1_Implementation_Blueprint.md` and the Phase 1
+implementation report.

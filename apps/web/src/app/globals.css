@@ -402,3 +402,90 @@ body {
 .zuvre-list-row:hover {
   background-color: var(--zuvre-surface-raised);
 }
+
+/* ==== Phase 1: application shell + chat ==== */
+
+.zuvre-app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.zuvre-app-nav {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--zuvre-border);
+  background-color: var(--zuvre-surface);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.zuvre-app-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  color: var(--zuvre-text-secondary);
+  font-size: 0.9375rem;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+.zuvre-app-nav-link:hover {
+  background-color: var(--zuvre-surface-raised);
+  color: var(--zuvre-text-primary);
+}
+
+.zuvre-app-nav-link-active {
+  background-color: var(--zuvre-surface-raised);
+  color: var(--zuvre-accent-primary);
+}
+
+.zuvre-app-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.zuvre-chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 26rem;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.zuvre-chat-bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 13px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.zuvre-chat-bubble-user {
+  align-self: flex-end;
+  background-color: var(--zuvre-accent-primary);
+  color: var(--zuvre-accent-primary-contrast);
+}
+
+.zuvre-chat-bubble-assistant {
+  align-self: flex-start;
+  background-color: var(--zuvre-surface-raised);
+  color: var(--zuvre-text-primary);
+  border: 1px solid var(--zuvre-border);
+}
+
+.zuvre-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.zuvre-form-label {
+  font-size: 0.8125rem;
+  color: var(--zuvre-text-secondary);
+}

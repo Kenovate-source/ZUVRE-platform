@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { capabilityRegistry } from "@zuvre/capability-sdk";
-import { rawDb, scopedDb } from "@zuvre/db";
-import { bootstrapCapabilities } from "@/server/capabilities/bootstrap";
+import { requireWorkspaceAccess, isAccessDenied } from "@/server/auth/workspace-access";
+import { runCapability } from "@/server/capabilities/run-capability";
 
 const requestSchema = z.object({
   workspaceId: z.string(),
@@ -11,104 +10,37 @@ const requestSchema = z.object({
 });
 
 /**
- * This route is the reference implementation of the capability execution
- * contract described in docs/09-capability-system.md:
- *   1. Verify the workspace holds an enabled grant for the capability.
- *   2. Create a CapabilityExecution row (auditable, resumable).
- *   3. Run the capability with a context that only exposes what the grant allows.
- *   4. Persist the result and any artifacts.
+ * Reference implementation of the capability execution contract
+ * (docs/09-capability-system.md).
  *
- * NOTE: authentication (identifying the calling user/session) is omitted
- * here for brevity in this foundation — see @zuvre/auth session.ts and
- * docs/07-security-model.md for how a real request would authenticate
- * before ever reaching this handler.
+ * SECURITY FIX (Phase 1): this route previously trusted whatever
+ * workspaceId the client sent, with this exact comment: "authentication
+ * ... is omitted here for brevity in this foundation." That gap is
+ * closed here — requireWorkspaceAccess() verifies the authenticated
+ * caller has an ACTIVE WorkspaceMember row for the *exact* workspace
+ * being requested before anything else happens. See ADR-0004 and
+ * apps/web/src/server/auth/workspace-access.ts.
+ *
+ * The grant-check → execute → record logic itself is unchanged from the
+ * original route — it's been extracted to runCapability() so the new
+ * chat route can reuse it instead of duplicating it.
  */
 export async function POST(req: NextRequest) {
-  await bootstrapCapabilities();
-
   const parsed = requestSchema.safeParse(await req.json());
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid request", issues: parsed.error.issues }, { status: 400 });
   }
   const { workspaceId, capabilityId, input } = parsed.data;
-  const db = scopedDb(workspaceId);
 
-  const grant = await db.raw.capabilityGrant.findUnique({
-    where: { workspaceId_capabilityId: { workspaceId, capabilityId } },
-  });
-  if (!grant || !grant.isEnabled) {
-    return NextResponse.json({ error: `Capability "${capabilityId}" is not granted to this workspace` }, { status: 403 });
-  }
-  if (grant.approvalPolicy === "BLOCKED") {
-    return NextResponse.json({ error: `Capability "${capabilityId}" is blocked for this workspace` }, { status: 403 });
+  const access = await requireWorkspaceAccess(workspaceId);
+  if (isAccessDenied(access)) {
+    return NextResponse.json({ error: access.message }, { status: access.status });
   }
 
-  const capability = capabilityRegistry.getLatest(capabilityId);
-  if (!capability) {
-    return NextResponse.json({ error: `Capability "${capabilityId}" is not registered` }, { status: 404 });
+  const result = await runCapability({ workspaceId, capabilityId, input });
+  if (!result.ok) {
+    return NextResponse.json({ error: result.error, issues: result.issues }, { status: result.status });
   }
 
-  const inputParse = capability.inputSchema.safeParse(input);
-  if (!inputParse.success) {
-    return NextResponse.json({ error: "Invalid capability input", issues: inputParse.error.issues }, { status: 400 });
-  }
-
-  const execution = await rawDb.capabilityExecution.create({
-    data: {
-      workspaceId,
-      capabilityId,
-      status: "RUNNING",
-      input: input as any,
-      startedAt: new Date(),
-    },
-  });
-
-  const controller = new AbortController();
-
-  try {
-    const output = await capability.execute(inputParse.data, {
-      executionId: execution.id,
-      workspaceId,
-      grantedScopes: (grant.grantedScopes as Record<string, unknown>) ?? {},
-      signal: controller.signal,
-      async reportProgress() {
-        /* stub: a real implementation streams this over SSE/WebSocket */
-      },
-      async emitArtifact(artifact) {
-        const created = await rawDb.artifact.create({
-          data: {
-            workspaceId,
-            executionId: execution.id,
-            kind: artifact.kind,
-            title: artifact.title,
-            storageRef: artifact.storageRef,
-            metadata: (artifact.metadata ?? {}) as any,
-          },
-        });
-        return { artifactId: created.id };
-      },
-      async requestPermission() {
-        // A real implementation pauses execution (status AWAITING_APPROVAL)
-        // and resumes via a separate approval endpoint. Foundation stub:
-        return "denied";
-      },
-    });
-
-    await rawDb.capabilityExecution.update({
-      where: { id: execution.id },
-      data: { status: "SUCCEEDED", output: output as any, finishedAt: new Date() },
-    });
-
-    return NextResponse.json({ executionId: execution.id, output });
-  } catch (err) {
-    await rawDb.capabilityExecution.update({
-      where: { id: execution.id },
-      data: {
-        status: "FAILED",
-        error: { message: err instanceof Error ? err.message : String(err) },
-        finishedAt: new Date(),
-      },
-    });
-    return NextResponse.json({ error: "Capability execution failed" }, { status: 500 });
-  }
+  return NextResponse.json({ executionId: result.executionId, output: result.output });
 }
