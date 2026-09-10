@@ -1,3 +1,4 @@
+import "server-only";
 import { ownerDb } from "@zuvre/db";
 
 /**

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifySessionToken } from "@zuvre/auth";
+import { verifySessionToken } from "@zuvre/auth/edge";
 
 /**
  * Cheap, JWT-signature-only gate for /app/*. Middleware runs on the Edge

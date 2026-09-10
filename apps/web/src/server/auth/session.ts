@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { cache } from "react";
-import { issueSessionToken, verifySessionToken } from "@zuvre/auth";
+import { issueSessionToken, verifySessionToken } from "@zuvre/auth/server";
 import { rawDb } from "@zuvre/db";
 
 /**

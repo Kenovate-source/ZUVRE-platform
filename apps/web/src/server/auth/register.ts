@@ -1,6 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { rawDb } from "@zuvre/db";
-import { hashPassword, DEFAULT_ROLE_PERMISSIONS } from "@zuvre/auth";
+import { hashPassword, DEFAULT_ROLE_PERMISSIONS } from "@zuvre/auth/server";
 
 /**
  * Implements the schema's own long-standing comment: "A personal account

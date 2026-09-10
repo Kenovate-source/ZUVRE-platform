@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { rawDb } from "@zuvre/db";
-import { verifyPassword } from "@zuvre/auth";
+import { verifyPassword } from "@zuvre/auth/server";
 import { createSession } from "@/server/auth/session";
 
 const bodySchema = z.object({
