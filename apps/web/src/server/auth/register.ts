@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { rawDb } from "@zuvre/db";
 import { hashPassword, DEFAULT_ROLE_PERMISSIONS } from "@zuvre/auth/server";
+import { bootstrapCapabilities } from "../capabilities/bootstrap";
 
 /**
  * Implements the schema's own long-standing comment: "A personal account
@@ -45,11 +46,26 @@ export interface RegisterResult {
  */
 const DEFAULT_PLAN_ID = "spark";
 
+/**
+ * Capabilities every new workspace is granted at registration. Without a
+ * CapabilityGrant row, runCapability() (apps/web/src/server/capabilities/
+ * run-capability.ts) returns 403 "not granted to this workspace" — i.e. a
+ * freshly registered user's very first chat message would fail. Explicit
+ * allow-list rather than "everything registered", so a future expensive or
+ * external-facing capability is never silently granted to every new account.
+ */
+const DEFAULT_GRANTED_CAPABILITY_IDS = ["ai.chat"] as const;
+
 export async function registerUser(input: RegisterInput): Promise<RegisterResult> {
   const passwordHash = await hashPassword(input.password);
   const base = slugify(input.displayName);
   const handle = withRandomSuffix(base);
   const workspaceSlug = withRandomSuffix(base);
+
+  // CapabilityGrant.capabilityId is a foreign key to CapabilityDefinition.id;
+  // bootstrapCapabilities() upserts those definition rows (idempotent), so it
+  // must run before the grants below can be created.
+  await bootstrapCapabilities();
 
   return rawDb.$transaction(async (tx) => {
     const user = await tx.user.create({
@@ -89,6 +105,19 @@ export async function registerUser(input: RegisterInput): Promise<RegisterResult
         joinedAt: new Date(),
       },
     });
+
+    for (const capabilityId of DEFAULT_GRANTED_CAPABILITY_IDS) {
+      await tx.capabilityGrant.create({
+        data: {
+          workspaceId: workspace.id,
+          capabilityId,
+          grantedScopes: {},
+          approvalPolicy: "AUTO",
+          isEnabled: true,
+          grantedByUserId: user.id,
+        },
+      });
+    }
 
     return { userId: user.id, workspaceId: workspace.id };
   });

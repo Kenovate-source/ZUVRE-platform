@@ -52,12 +52,12 @@ export async function createSession(userId: string): Promise<void> {
  * Route Handlers) — NOT from middleware, which runs on the Edge runtime
  * by default. Middleware (apps/web/src/middleware.ts) does a cheaper,
  * JWT-signature-only check instead; this function is the real,
- * authoritative gate, called from the (app) layout as defense in depth.
+ * authoritative gate, called from the /app layout as defense in depth.
  * Returns null for every failure mode — callers should treat that as
  * "not authenticated," never throw.
  *
  * Wrapped in React's cache() so multiple independent calls within the
- * same request (the (app) layout and each leaf page all resolve the
+ * same request (the /app layout and each leaf page all resolve the
  * session themselves, deliberately, rather than threading it through
  * props — see ZUVRE_Phase1_Implementation_Blueprint.md §12) dedupe into
  * one actual database query.

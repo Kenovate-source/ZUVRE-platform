@@ -6,8 +6,8 @@ import { verifySessionToken } from "@zuvre/auth/edge";
  * runtime by default, where Prisma Client isn't usable — so this
  * deliberately does NOT check revocation (that needs a DB call). It
  * exists to redirect obviously-unauthenticated requests fast, not to be
- * the sole authorization boundary. The (app) layout
- * (apps/web/src/app/(app)/layout.tsx) calls the DB-backed
+ * the sole authorization boundary. The /app layout
+ * (apps/web/src/app/app/layout.tsx) calls the DB-backed
  * getCurrentSession() as the real, authoritative check — this is
  * defense in depth, not a duplicate of it. See ADR-0004.
  */
