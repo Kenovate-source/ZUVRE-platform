@@ -11,6 +11,12 @@ import { ownerDb } from "@zuvre/db";
  * This does not itself check `isPlatformOwner` — callers (API route
  * handlers) are expected to have already authenticated the caller as the
  * owner; this wrapper's job is auditability, not authentication.
+ *
+ * Structure note: `return await fn()` inside try/finally (rather than
+ * assigning to a `let result: T` declared before the try) means no
+ * possibly-unassigned variable and therefore no `@ts-expect-error` is
+ * needed — the previous version's directive was reported as unused
+ * (TS2578) by the compiler, i.e. a real build error.
  */
 export async function withOwnerAudit<T>(
   params: {
@@ -23,12 +29,13 @@ export async function withOwnerAudit<T>(
   fn: () => Promise<T>
 ): Promise<T> {
   const db = ownerDb();
-  let result: T;
-  let error: unknown;
+  let outcome: "success" | "error" = "success";
+  let errorMessage: string | undefined;
   try {
-    result = await fn();
+    return await fn();
   } catch (err) {
-    error = err;
+    outcome = "error";
+    errorMessage = err instanceof Error ? err.message : undefined;
     throw err;
   } finally {
     await db.auditLog.create({
@@ -40,12 +47,10 @@ export async function withOwnerAudit<T>(
         targetId: params.targetId,
         metadata: {
           ...params.metadata,
-          outcome: error ? "error" : "success",
-          error: error instanceof Error ? error.message : undefined,
+          outcome,
+          error: errorMessage,
         } as any,
       },
     });
   }
-  // @ts-expect-error — assigned in try unless it threw, in which case we already rethrew.
-  return result;
 }

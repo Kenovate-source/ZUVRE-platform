@@ -117,6 +117,7 @@ model Workspace {
   agents          Agent[]
   agentRuns       AgentRun[]
   conversations   Conversation[]
+  worlds          World[]
   links           ZuvreLink[]
   qrCodes         QrCode[]
   auditLogs       AuditLog[]
@@ -303,6 +304,30 @@ model AgentRun {
 }
 
 // ---------------------------------------------------------------------------
+// Worlds
+// ---------------------------------------------------------------------------
+// The core ZUVRE concept — "Give Thought a World." A World is a named,
+// described container, scoped to a workspace, that conversations (and
+// later other work — artifacts, agents, files) can be organized under.
+// Deliberately minimal for Phase 1: no artifact/agent/file relations yet —
+// those are additive later, not a breaking change, per
+// ZUVRE_Phase1_Implementation_Blueprint.md §7/§9.
+
+model World {
+  id          String    @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  conversations Conversation[]
+
+  @@index([workspaceId])
+}
+
+// ---------------------------------------------------------------------------
 // Conversations & Memory
 // ---------------------------------------------------------------------------
 
@@ -310,12 +335,15 @@ model Conversation {
   id          String   @id @default(cuid())
   workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  worldId     String?
+  world       World?   @relation(fields: [worldId], references: [id], onDelete: SetNull)
   title       String?
   createdAt   DateTime @default(now())
 
   messages    Message[]
 
   @@index([workspaceId])
+  @@index([worldId])
 }
 
 model Message {

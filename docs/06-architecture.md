@@ -127,7 +127,7 @@ Full rationale: ADR-0004. Summary for this doc's purposes:
   authorization boundary every workspace-scoped route must call.
   Never trust a client-supplied `workspaceId`.
 - `apps/web/src/middleware.ts` does a cheap, Edge-compatible JWT check;
-  the `(app)` route group layout does the authoritative, DB-backed check.
+  the `/app` layout (`apps/web/src/app/app/layout.tsx`) does the authoritative, DB-backed check.
   Two layers, deliberately, not duplication — see the file's own comment.
 - `World` (`packages/db/prisma/schema.prisma`) is the "Give Thought a
   World" concept at the data layer — a named container, scoped to a

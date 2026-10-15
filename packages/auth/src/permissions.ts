@@ -39,7 +39,7 @@ export class PermissionDeniedError extends Error {
 }
 
 /** Default role permission sets seeded at workspace creation. Owner-editable thereafter. */
-export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
+export const DEFAULT_ROLE_PERMISSIONS = {
   owner: ["workspace.*", "capability.*", "agent.*", "billing.*"],
   editor: [
     "workspace.artifacts.*",
@@ -48,4 +48,4 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
     "workspace.members.view",
   ],
   viewer: ["workspace.artifacts.view", "workspace.members.view"],
-};
+} satisfies Record<string, string[]>;

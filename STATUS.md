@@ -38,7 +38,7 @@ installed that wasn't.
   exact workspace requested — not just that *someone* is logged in.
 - **`middleware.ts`** — fast, Edge-compatible JWT-signature check
   gating `/app/*`, with the DB-backed authoritative check happening in
-  the `(app)` layout (Edge runtime can't run Prisma) — documented
+  the `/app` layout (Edge runtime can't run Prisma) — documented
   explicitly as defense-in-depth, not redundant duplication.
 - **Persistent AI chat** — `/api/chat` (new route) wraps the *unchanged*
   `ai.chat` capability with real `Conversation`/`Message` persistence.
@@ -46,7 +46,7 @@ installed that wasn't.
   messages, matching `ai.chat`'s own input schema limit (`.max(50)`) —
   found and fixed during this pass; loading unbounded history would have
   made any conversation past 50 messages fail silently.
-- **The application shell**: `(app)` route group, protected layout,
+- **The application shell**: `/app` section (`apps/web/src/app/app/`), protected layout,
   Home / Worlds / Chat / Settings pages — the trimmed information
   architecture from `ZUVRE_Phase1_Implementation_Blueprint.md` §6.
   Create/Explore/Capabilities/Library were deliberately not built —
