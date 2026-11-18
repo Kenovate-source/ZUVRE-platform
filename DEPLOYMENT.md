@@ -161,3 +161,13 @@ environment cannot reach the internet, so I can't run `pnpm install` or
 trigger a deployment myself. Please run §6's local steps and report back
 either the successful `pnpm build` output or whatever error comes next,
 and I'll continue from there.
+
+
+## Checklist for this release (Vercel)
+
+1. **Apply the updated `turbo.json`** (`@zuvre/db#build` is never cached — ADR-0005). If the old `Property 'world' does not exist on type 'PrismaClient'` error ever reappears, redeploy once with *Clear build cache*.
+2. Set the real env vars from `.env.example` (at minimum `DATABASE_URL`, `AUTH_SECRET`, `ANTHROPIC_API_KEY`; also `APP_URL`, `AI_DEFAULT_TEXT_PROVIDER`, `AI_DEFAULT_TEXT_MODEL`, `DEFAULT_PLAN_ID`). **Do not set `NEXT_PUBLIC_ZUVRE_LOCAL_DEMO`**; demo mode is ignored by production builds anyway, but there is no reason to set it.
+3. Apply the schema to the production database and make sure the `spark` plan row exists (Phase 1 requirement — registration needs it). The package's `migrate` script is `prisma migrate dev` (development); for production use `pnpm --filter @zuvre/db exec prisma migrate deploy`, then run the seed in `packages/db/prisma/seed.ts` (e.g. `pnpm --filter @zuvre/db exec tsx prisma/seed.ts`, or insert the row by hand). *Not executed in the authoring sandbox — confirm the exact seed invocation for your setup.*
+4. Open the deployed site in a real browser and check: the landing page hydrates without console errors; the journey chapters follow scroll; `/register` → `/app/home` works; **`/demo/home` shows "Local demo mode is off"**; `/login` shows the real form (no demo banner).
+5. Check images/icons load (asset paths are case-sensitive on Vercel — `pnpm verify:landing` checks exact case) and view the page with *Reduce motion* enabled.
+6. Workspaces created before the registration grant fix have no `ai.chat` grant; create a fresh account or insert the grant row.

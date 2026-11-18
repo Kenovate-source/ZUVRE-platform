@@ -1,5 +1,25 @@
 # ZUVRE — Status Report
 
+## Latest pass — immersive universe, real brand identity, local demo mode
+
+**Implemented and verified (real-browser + strict type-check, see `VALIDATION-REPORT.md`):**
+- Landing page rebuilt as one scroll through a living environment: arrival, idea path, pinned ecosystem journey, control, today, invitation.
+- Real canonical logo (emblem, mark, wordmark) and Zuri artwork everywhere; the hand-redrawn Phase-0 SVG mark was **removed**.
+- Zuri motion system (arrive / breathe / pointer-proximity turn / near glow / nudge) — whole-image only; see `docs/12-zuri-motion.md`.
+- Application shell shares the same world (glass nav with real lockup, quiet environment backdrop, Zuri on home).
+- **Local demo mode** (`pnpm dev:demo`): browser-only sign-up/log-in/session/log-out and a demo app (onboarding, Worlds, conversation space, settings). Development-only; cannot be enabled in a production build. `docs/11-local-demo-mode.md`.
+- Capability claims are driven by one inventory and enforced by `pnpm verify:landing` (1 live capability = 1 registered).
+
+**Fixed on the way (found by inspection/validation):** route-group URL mismatch (`/app/*` pages were served at `/home`…), missing default
+`ai.chat` grant at registration (first chat would 403), `Record<string,…>` indexing under `noUncheckedIndexedAccess`, an unused `@ts-expect-error`
+(TS2578) in `owner.ts`, a `Uint8Array`→`BufferSource` type error under TS ≥ 5.7, header overflow at 360 px, and Aubade small-text contrast.
+
+**Still not done / limited:** `in development` is supported but unused (nothing is being built); Zuri needs a transparent, layered master for real rigging;
+background/decor art are ~500 px reference crops; 16 px favicon is not legible; real AI chat, real auth in production, email verification, rate limiting,
+CSRF and everything marked *Planned* on the landing page remain unbuilt. **Not verified:** a real `next build`, a Vercel deployment, the Prisma-dependent server code
+under a type-check, and the `/app/*` pages in a browser (they need a database).
+
+
 This file is the single source of truth for what in this repository is
 **real and implemented**, what is **designed but not implemented**, and
 what has **not been validated** because this environment has no network

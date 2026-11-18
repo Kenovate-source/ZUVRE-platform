@@ -1,0 +1,7 @@
+# pnpm config for CI/Vercel reliability.
+# Do not remove auto-install-peers/strict-peer-dependencies without testing
+# a clean install — Next.js's peer dependency graph is large enough that
+# strict peer resolution can otherwise abort the install on some pnpm
+# versions.
+auto-install-peers=true
+strict-peer-dependencies=false
