@@ -1,0 +1,426 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================================
+   ZUVRE THEME VARIABLES
+   Source of truth: packages/ui/src/tokens.ts (see that file's header for
+   the canonical-vs-derived distinction and the interpretive note on
+   Aubade's neutral ramp). Kept hand-synced with tokens.ts — see
+   docs/03-brand-book.md §5.
+   ========================================================================= */
+
+:root[data-zuvre-theme="nocturne"] {
+  --zuvre-background: #0e0c14;
+  --zuvre-surface: #121019;
+  --zuvre-surface-raised: #181520;
+  --zuvre-border: #211d29;
+  --zuvre-border-interactive: #656263;
+  --zuvre-text-primary: #f2eee5;
+  --zuvre-text-secondary: #a9a6a2;
+  --zuvre-text-muted: #757272;
+  --zuvre-accent-primary: #d6a64a;
+  --zuvre-accent-primary-contrast: #0e0c14;
+  --zuvre-accent-secondary: #8dafa4;
+  --zuvre-success: #6fa88b;
+  --zuvre-warning: #cc8a3e;
+  --zuvre-danger: #c06b57;
+  --zuvre-info: #8dafa4;
+  --zuvre-shadow-card: 0 1px 2px rgba(6, 5, 9, 0.4), 0 8px 24px -8px rgba(6, 5, 9, 0.55);
+  --zuvre-shadow-modal: 0 24px 64px -16px rgba(4, 3, 7, 0.65);
+  --zuvre-glow-accent: 0 0 0 3px rgba(214, 166, 74, 0.18);
+  --zuvre-hairline-highlight: inset 0 1px 0 rgba(242, 238, 229, 0.06);
+  --zuvre-bloom-1: rgba(214, 166, 74, 0.10);
+  --zuvre-bloom-2: rgba(141, 175, 164, 0.08);
+}
+
+:root[data-zuvre-theme="aubade"] {
+  --zuvre-background: #0e0c14;
+  --zuvre-surface: #121019;
+  --zuvre-surface-raised: #181520;
+  --zuvre-border: #211d29;
+  --zuvre-border-interactive: #656263;
+  --zuvre-text-primary: #f2eee5;
+  --zuvre-text-secondary: #a9a6a2;
+  --zuvre-text-muted: #757272;
+  --zuvre-accent-primary: #5e8178;
+  --zuvre-accent-primary-contrast: #0e0c14;
+  --zuvre-accent-secondary: #687552;
+  --zuvre-success: #6fa88b;
+  --zuvre-warning: #cc8a3e;
+  --zuvre-danger: #c06b57;
+  --zuvre-info: #8dafa4;
+  --zuvre-shadow-card: 0 1px 2px rgba(6, 5, 9, 0.4), 0 8px 24px -8px rgba(6, 5, 9, 0.55);
+  --zuvre-shadow-modal: 0 24px 64px -16px rgba(4, 3, 7, 0.65);
+  --zuvre-glow-accent: 0 0 0 3px rgba(94, 129, 120, 0.22);
+  --zuvre-hairline-highlight: inset 0 1px 0 rgba(242, 238, 229, 0.06);
+  --zuvre-bloom-1: rgba(94, 129, 120, 0.12);
+  --zuvre-bloom-2: rgba(104, 117, 82, 0.10);
+}
+
+body {
+  background-color: var(--zuvre-background);
+  color: var(--zuvre-text-primary);
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* =========================================================================
+   ZUVRE COMPONENT VOCABULARY — unchanged mechanism, new values only.
+   See docs/03-brand-book.md §6.
+   ========================================================================= */
+
+.zuvre-eyebrow {
+  font-family: theme("fontFamily.mono");
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--zuvre-text-muted);
+}
+
+.zuvre-card {
+  background-color: var(--zuvre-surface);
+  border: 1px solid var(--zuvre-border);
+  border-radius: 13px;
+  box-shadow: var(--zuvre-shadow-card);
+  position: relative;
+}
+
+.zuvre-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--zuvre-hairline-highlight);
+  pointer-events: none;
+}
+
+.zuvre-panel-raised {
+  background-color: var(--zuvre-surface-raised);
+  border: 1px solid var(--zuvre-border);
+  border-radius: 13px;
+  box-shadow: var(--zuvre-shadow-modal);
+}
+
+.zuvre-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--zuvre-border);
+  color: var(--zuvre-text-secondary);
+  background-color: var(--zuvre-surface-raised);
+}
+
+.zuvre-badge-accent {
+  border-color: color-mix(in srgb, var(--zuvre-accent-primary) 40%, transparent);
+  color: var(--zuvre-accent-primary);
+  background-color: color-mix(in srgb, var(--zuvre-accent-primary) 12%, var(--zuvre-surface));
+}
+
+.zuvre-button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  background-color: var(--zuvre-accent-primary);
+  color: var(--zuvre-accent-primary-contrast);
+  transition: filter 220ms cubic-bezier(0.2, 0, 0, 1), transform 220ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.zuvre-button-primary:hover { filter: brightness(1.08); }
+.zuvre-button-primary:active { transform: translateY(1px); }
+
+.zuvre-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  background-color: transparent;
+  color: var(--zuvre-text-primary);
+  border: 1px solid var(--zuvre-border-interactive);
+  transition: background-color 220ms ease;
+}
+
+.zuvre-button-secondary:hover {
+  background-color: var(--zuvre-surface-raised);
+}
+
+.zuvre-input {
+  background-color: var(--zuvre-surface);
+  border: 1px solid var(--zuvre-border-interactive);
+  border-radius: 9px;
+  padding: 0.625rem 0.875rem;
+  color: var(--zuvre-text-primary);
+  transition: box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.zuvre-input:focus {
+  outline: none;
+  border-color: var(--zuvre-accent-primary);
+  box-shadow: var(--zuvre-glow-accent);
+}
+
+.zuvre-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--zuvre-glow-accent);
+  border-radius: 9px;
+}
+
+/* A visually unmistakable "real asset not yet available" slot — used
+   where a production asset (e.g. Zuri) doesn't exist yet, so a pending
+   state can never be confused with finished content. Dashed border,
+   muted, no shadow/glow. See docs/03-brand-book.md §13. */
+.zuvre-pending-slot {
+  background-color: transparent;
+  border: 1px dashed var(--zuvre-border-interactive);
+  border-radius: 13px;
+  color: var(--zuvre-text-muted);
+}
+
+/* =========================================================================
+   THE LIVING ZUVRE UNIVERSE — reusable atmospheric background system.
+   See apps/web/src/components/universe/. Supersedes the earlier static
+   .zuvre-bloom mechanism entirely (no parallel/duplicate system kept).
+   ========================================================================= */
+
+.zuvre-universe {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Layer 1 — atmospheric depth. Multiple soft, low-opacity radial fields
+   rather than a flat color or a single blob — restrained, not neon. */
+.zuvre-universe-depth {
+  position: absolute;
+  inset: -10%;
+}
+
+.zuvre-universe-depth-soft {
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 10%, var(--zuvre-bloom-1), transparent 65%),
+    radial-gradient(ellipse 50% 35% at 90% 80%, var(--zuvre-bloom-2), transparent 65%);
+}
+
+.zuvre-universe-depth-medium {
+  background:
+    radial-gradient(ellipse 65% 45% at 12% 8%, var(--zuvre-bloom-1), transparent 65%),
+    radial-gradient(ellipse 55% 40% at 92% 30%, var(--zuvre-bloom-2), transparent 65%),
+    radial-gradient(ellipse 50% 50% at 50% 100%, var(--zuvre-bloom-1), transparent 70%);
+}
+
+.zuvre-universe-depth-strong {
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 0%, var(--zuvre-bloom-1), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 100% 60%, var(--zuvre-bloom-2), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 30% 100%, var(--zuvre-bloom-2), transparent 65%);
+}
+
+/* Layer 3 — orbital arcs. Extremely slow, linear (constant angular
+   velocity reads as "orbit," not "animation"). Disabled under reduced
+   motion — the arcs themselves (static) still provide depth. */
+@keyframes zuvre-orbit-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.zuvre-orbital-arc-a { animation: zuvre-orbit-rotate 140s linear infinite; }
+.zuvre-orbital-arc-b { animation: zuvre-orbit-rotate 200s linear infinite reverse; }
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-orbital-arc-a, .zuvre-orbital-arc-b { animation: none; }
+}
+
+/* Layer 5 — cursor-following ambient light. Defaults to a centered glow
+   when --pointer-x/--pointer-y haven't been set yet (first paint, touch
+   devices, reduced motion) so it never looks broken/empty. */
+.zuvre-ambient-light {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle 320px at var(--pointer-x, 50%) var(--pointer-y, 30%),
+    var(--zuvre-bloom-1),
+    transparent 70%
+  );
+  transition: background-position 900ms cubic-bezier(0.2, 0, 0, 1);
+  opacity: 0.8;
+}
+
+@keyframes zuvre-breathe {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-6px) scale(1.015); }
+}
+
+.zuvre-mascot-breathe {
+  animation: zuvre-breathe 5200ms ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-mascot-breathe { animation: none; }
+}
+
+@keyframes zuvre-flicker {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.85; }
+  55% { opacity: 0.95; }
+}
+
+.zuvre-mascot-core {
+  animation: zuvre-flicker 3400ms ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-mascot-core { animation: none; }
+}
+
+/* Spotlight button — see components/spotlight-button.tsx. Interaction-
+   driven (hover), not a continuous animation, so it stays active under
+   prefers-reduced-motion per the brief's own distinction. */
+.zuvre-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.zuvre-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 90px at var(--spot-x, 50%) var(--spot-y, 50%), rgba(242, 238, 229, 0.16), transparent 70%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+
+.zuvre-spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Restrained hover feedback for interactive cards and list rows — plain
+   CSS, no cursor-tracking needed for these (that would be excess per the
+   "every interaction must have a purpose" rule). Scoped to explicit
+   modifier classes rather than a blanket .zuvre-card:hover, so it doesn't
+   also affect non-interactive uses like the theme toggle's pill. */
+.zuvre-card-interactive {
+  transition: transform 220ms cubic-bezier(0.2, 0, 0, 1), border-color 220ms ease;
+}
+
+.zuvre-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--zuvre-border-interactive);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zuvre-card-interactive:hover { transform: none; }
+}
+
+.zuvre-list-row {
+  transition: background-color 220ms ease;
+}
+
+.zuvre-list-row:hover {
+  background-color: var(--zuvre-surface-raised);
+}
+
+/* ==== Phase 1: application shell + chat ==== */
+
+.zuvre-app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.zuvre-app-nav {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--zuvre-border);
+  background-color: var(--zuvre-surface);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.zuvre-app-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  color: var(--zuvre-text-secondary);
+  font-size: 0.9375rem;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+.zuvre-app-nav-link:hover {
+  background-color: var(--zuvre-surface-raised);
+  color: var(--zuvre-text-primary);
+}
+
+.zuvre-app-nav-link-active {
+  background-color: var(--zuvre-surface-raised);
+  color: var(--zuvre-accent-primary);
+}
+
+.zuvre-app-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.zuvre-chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 26rem;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.zuvre-chat-bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 13px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.zuvre-chat-bubble-user {
+  align-self: flex-end;
+  background-color: var(--zuvre-accent-primary);
+  color: var(--zuvre-accent-primary-contrast);
+}
+
+.zuvre-chat-bubble-assistant {
+  align-self: flex-start;
+  background-color: var(--zuvre-surface-raised);
+  color: var(--zuvre-text-primary);
+  border: 1px solid var(--zuvre-border);
+}
+
+.zuvre-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.zuvre-form-label {
+  font-size: 0.8125rem;
+  color: var(--zuvre-text-secondary);
+}
